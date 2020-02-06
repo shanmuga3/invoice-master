@@ -60,9 +60,6 @@ class LaravelEntrustSeeder extends Seeder
                 $role_users  = $userRoles[$key];
 
                 foreach ($role_users as $role_user) {
-                    if(isset($role_user["password"])) {
-                        $role_user["password"] = Hash::make($role_user["password"]);
-                    }
                     $user = \App\Models\Admin::create($role_user);
                     $user->attachRole($role);
                 }

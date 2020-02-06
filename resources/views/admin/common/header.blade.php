@@ -100,20 +100,16 @@
 							<div class="user-box">
 								<div class="avatar-lg"><img src="{{ asset('images/profile.png') }}" alt="image profile" class="avatar-img rounded"></div>
 								<div class="u-text">
-									<h4>Shanmuga</h4>
-									<p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+									<h4> {{ Auth::guard('admin')->user()->username }} </h4>
+									<p class="text-muted"> {{ Auth::guard('admin')->user()->email }} </p>
 								</div>
 							</div>
 						</li>
 						<li>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">My Profile</a>
-							<a class="dropdown-item" href="#">My Balance</a>
-							<a class="dropdown-item" href="#">Inbox</a>
+							<a class="dropdown-item" href="#">Edit Profile</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Account Setting</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Logout</a>
+							<a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
 						</li>
 					</ul>
 				</li>
@@ -137,8 +133,10 @@
 				<div class="info">
 					<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 						<span>
-							Shanmuga
-							<span class="user-level">Administrator</span>
+							{{ Auth::guard('admin')->user()->username }}
+							<span class="user-level">
+								Administrator
+							</span>
 							<span class="caret"></span>
 						</span>
 					</a>
@@ -180,7 +178,7 @@
 					<h4 class="text-section"> Invoice </h4>
 				</li>
 				<li class="nav-item">
-					<a href="widgets.html">
+					<a href="">
 						<i class="fas fa-desktop"></i>
 						<p> Reports </p>
 					</a>

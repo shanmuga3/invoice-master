@@ -1,0 +1,19 @@
+.carousel-item {
+	height: 100vh;
+	min-height: 600px;
+	background-size: cover;
+}
+
+.login-container {
+	position:absolute;
+	top: 10%;
+	left: 35%;
+	width: 35%;
+}
+
+.flash-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9;
+}

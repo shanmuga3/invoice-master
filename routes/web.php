@@ -11,5 +11,15 @@
 |
 */
 
-Route::get('/', "HomeController@index");
-Route::get('dashboard', "HomeController@index")->name('dashboard');
+Route::group(['middleware' => 'guest:admin'], function () {
+	Route::view('login', 'admin.login')->name('login');
+	Route::post('authenticate', 'HomeController@authenticate')->name('authenticate');
+});
+
+Route::group(['middleware' => 'auth:admin'], function () {
+    Route::get('logout', 'HomeController@logout')->name('logout');
+    Route::get('/', function() {
+    	return redirect()->route('admin.dashboard');
+    });
+	Route::get('dashboard', "HomeController@dashboard")->name('dashboard');
+});
