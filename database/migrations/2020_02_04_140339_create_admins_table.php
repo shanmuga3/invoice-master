@@ -18,10 +18,10 @@ class CreateAdminsTable extends Migration
             $table->string('username',30);
             $table->string('email',30);
             $table->string('password', 100);
+            $table->tinyInteger('type')->default(0);
             $table->boolean('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

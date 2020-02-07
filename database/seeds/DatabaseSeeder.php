@@ -12,9 +12,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            LaravelEntrustSeeder::class,
             SiteSettingsTableSeeder::class,
             EmailSettingsTableSeeder::class,
-            LaravelEntrustSeeder::class,
+            FeesTableSeeder::class,
+        ]);
+
+        $this->call([
+            AgencyTableSeeder::class,
         ]);
     }
 }

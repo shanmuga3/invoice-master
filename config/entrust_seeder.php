@@ -3,10 +3,15 @@
 return [
     'role_structure' => [
         'admin' => [
-            'admin_users'       => 'c,r,u,d',
-            'roles'             => 'c,r,u,d',
-            'invoice'           => 'c,r,u,d',
-            'reports'           => 'r,e',
+            'admin_users'   => 'c,r,u,d',
+            'roles'         => 'c,r,u,d',
+            'agencies'      => 'c,r,u,d',
+            'customers'     => 'c,r,u,d',
+            'invoice'       => 'c,r,u,d',
+            'reports'       => 'r,e',
+            'fees'          => 'm',
+            'email_settings'=> 'm',
+            'site_settings' => 'm',
         ],
     ],
     'user_roles' => [
@@ -25,6 +30,7 @@ return [
         'r' => 'view',
         'u' => 'update',
         'd' => 'delete',
+        'm' => 'manage',
         'e' => 'export',
     ],
 ];

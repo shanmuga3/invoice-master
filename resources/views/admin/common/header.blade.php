@@ -164,25 +164,14 @@
 				</div>
 			</div>
 			<ul class="nav">
-				<li class="nav-item active">
-					<a href="{{ route('admin.dashboard') }}">
-						<i class="fas fa-home"></i>
-						<p>Dashboard</p>
-						<span class="badge badge-count"></span>
+				@foreach($menu_data as $menu)
+				<li class="nav-item {{ (isActiveRoute($menu['route'])) ? 'active' : '' }}">
+					<a href="{{ route($menu['route']) }}">
+						<i class="$menu['icon']"></i>
+						<p> {{ $menu['value'] }} </p>
 					</a>
 				</li>
-				<li class="nav-section">
-					<span class="sidebar-mini-icon">
-						<i class="fa fa-ellipsis-h"></i>
-					</span>
-					<h4 class="text-section"> Invoice </h4>
-				</li>
-				<li class="nav-item">
-					<a href="">
-						<i class="fas fa-desktop"></i>
-						<p> Reports </p>
-					</a>
-				</li>
+				@endforeach
 			</ul>
 		</div>
 	</div>
