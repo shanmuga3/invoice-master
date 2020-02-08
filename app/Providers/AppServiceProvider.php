@@ -133,13 +133,13 @@ class AppServiceProvider extends ServiceProvider
     protected function setEmailConfig()
     {                  
         Config::set([
-            'mail.driver'     => email_config('driver'),
-            'mail.host'       => email_config('host'),
-            'mail.port'       => email_config('port'),
-            'mail.from'       => ['address' => email_config('from_address'), 'name' => email_config('from_name')],
-            'mail.encryption' => email_config('encryption'),
-            'mail.username'   => email_config('username'),
-            'mail.password'   => email_config('password'),
+            'mail.driver'     => email_settings('driver'),
+            'mail.host'       => email_settings('host'),
+            'mail.port'       => email_settings('port'),
+            'mail.from'       => ['address' => email_settings('from_address'), 'name' => email_settings('from_name')],
+            'mail.encryption' => email_settings('encryption'),
+            'mail.username'   => email_settings('username'),
+            'mail.password'   => email_settings('password'),
         ]);
     }
 }

@@ -106,18 +106,18 @@ if (!function_exists('fees')) {
 }
 
 /**
- * Resolve Site Settings and get value of given string
+ * Resolve Email Settings and get value of given string
  *
  * @param  string $key Name of the value to get
  * @return String
  */
-if (!function_exists('email_config')) {
+if (!function_exists('email_settings')) {
 
-	function email_config($key)
+	function email_settings($key)
 	{
-		$email_config = resolve('email_settings');
-		$config = $email_config->where('name',$key)->first();
+		$email_settings = resolve('email_settings');
+		$setting = $email_settings->where('name',$key)->first();
 		
-		return optional($config)->value;
+		return optional($setting)->value;
 	}
 }

@@ -69,4 +69,15 @@ return [
         'only_one_admin'    => 'Atleast One Active Admin User,So Cannot Delete',
         'only_one_role'     => 'Atleast One Active Role,So Cannot Delete',
     ],
+
+    'email_setting'  => [
+        'driver'                => 'Driver',
+        'host'                  => 'Host',
+        'port'                  => 'Port',
+        'from_address'          => 'From Address',
+        'from_name'             => 'From Name',
+        'encryption'            => 'Encryption',
+        'username'              => 'Username',
+        'password'              => 'Password',
+    ],
 ];

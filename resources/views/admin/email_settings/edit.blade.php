@@ -14,13 +14,7 @@
 					<i class="flaticon-right-arrow"></i>
 				</li>
 				<li class="nav-item">
-					<a href="{{ route('admin.email_settings') }}">@lang("admin_messages.email_settings")</a>
-				</li>
-				<li class="separator">
-					<i class="flaticon-right-arrow"></i>
-				</li>
-				<li class="nav-item">
-					<a href="#">@lang("admin_messages.edit")</a>
+					<a href="#">@lang("admin_messages.email_settings")</a>
 				</li>
 			</ul>
 		</div>
@@ -30,50 +24,54 @@
 					<div class="card-header">
 						<div class="d-flex align-items-center">
 							<h4 class="card-title"> @lang("admin_messages.email_settings") </h4>
-							
 						</div>
 					</div>
-					{!! Form::open(['url' => route('admin.email_settings.update',['id' => $result->id]), 'class' => 'form-horizontal','id'=>'email_settings-form','method' => "PUT"]) !!}
+					{!! Form::open(['url' => route('admin.email_settings.update'), 'class' => 'form-horizontal','id'=>'email_settings-form','method' => "PUT"]) !!}
 					<div class="card-body">
 						<div class="form-group row">
-							<label for="username" class="col-sm-2 col-form-label"> @lang('admin_messages.users.user_name') <em class="text-danger">*</em></label>
-							<div class="col-sm-10">
-								{!! Form::text('username', @$result->username, ['class' => 'form-control input-square', 'id' => 'username']) !!}
-								<span class="text-danger">{{ $errors->first('username') }}</span>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="email" class="col-sm-2 col-form-label"> @lang('admin_messages.users.email_address') <em class="text-danger">*</em></label>
-							<div class="col-sm-10">
-								{!! Form::email('email', @$result->email, ['class' => 'form-control input-square', 'id' => 'email']) !!}
-								<span class="text-danger">{{ $errors->first('email') }}</span>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="password" class="col-sm-2 col-form-label"> @lang('admin_messages.users.password') <em class="text-danger">*</em></label>
-							<div class="col-sm-10">
-								{!! Form::text('password', '', ['class' => 'form-control input-square', 'id' => 'password' ]) !!}
-								<span class="text-danger">{{ $errors->first('password') }}</span>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="role" class="col-sm-2 col-form-label"> @lang('admin_messages.users.role') <em class="text-danger">*</em></label>
-							<div class="col-sm-10">
-								{!! Form::select('role', $roles, @$role_id, ['class' => 'form-control', 'id' => 'role', 'placeholder' => 'Role']) !!}
-								<span class="text-danger">{{ $errors->first('role') }}</span>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="status" class="col-sm-2 col-form-label"> @lang('admin_messages.status') <em class="text-danger">*</em></label>
-							<div class="col-sm-10">
-								{!! Form::select('status', array('1' => 'Active', '0' => 'Inactive'), @$result->status, ['class' => 'form-control', 'id' => 'status', 'placeholder' => Lang::get("admin_messages.status")]) !!}
-								<span class="text-danger">{{ $errors->first('status') }}</span>
-							</div>
-						</div>
+						<label for="driver" class="col-sm-2 col-form-label"> @lang('admin_messages.email_setting.driver') <em class="text-danger"> * </em></label>
+						{!! Form::text('driver', old('driver',email_settings('driver')), ['class' => 'form-control input-square', 'id' => 'driver']) !!}
+						<span class="text-danger">{{ $errors->first('driver') }}</span>
+					</div>
+					<div class="form-group row">
+						<label for="host" class="col-sm-2 col-form-label"> @lang('admin_messages.email_setting.host') <em class="text-danger"> * </em></label>
+						{!! Form::text('host', old('host',email_settings('host')), ['class' => 'form-control input-square', 'id' => 'host']) !!}
+						<span class="text-danger">{{ $errors->first('host') }}</span>
+					</div>
+					<div class="form-group row">
+						<label for="port" class="col-sm-2 col-form-label"> @lang('admin_messages.email_setting.port') <em class="text-danger"> * </em></label>
+						{!! Form::text('port', old('port',email_settings('port')), ['class' => 'form-control input-square', 'id' => 'port']) !!}
+						<span class="text-danger">{{ $errors->first('port') }}</span>
+					</div>
+					<div class="form-group row">
+						<label for="encryption" class="col-sm-2 col-form-label"> @lang('admin_messages.email_setting.encryption') <em class="text-danger"> * </em></label>
+						{!! Form::text('encryption', old('encryption',email_settings('encryption')), ['class' => 'form-control input-square', 'id' => 'encryption']) !!}
+						<span class="text-danger">{{ $errors->first('encryption') }}</span>
+					</div>
+					<div class="form-group row">
+						<label for="from_name" class="col-sm-2 col-form-label"> @lang('admin_messages.email_setting.from_name') <em class="text-danger"> * </em></label>
+						{!! Form::text('from_name', old('from_name',email_settings('from_name')), ['class' => 'form-control input-square', 'id' => 'from_name']) !!}
+						<span class="text-danger">{{ $errors->first('from_name') }}</span>
+					</div>
+					<div class="form-group row">
+						<label for="from_address" class="col-sm-2 col-form-label"> @lang('admin_messages.email_setting.from_address') <em class="text-danger"> * </em></label>
+						{!! Form::text('from_address', old('from_address',email_settings('from_address')), ['class' => 'form-control input-square', 'id' => 'from_address']) !!}
+						<span class="text-danger">{{ $errors->first('from_address') }}</span>
+					</div>
+					<div class="form-group row">
+						<label for="username" class="col-sm-2 col-form-label"> @lang('admin_messages.email_setting.username') <em class="text-danger"> * </em></label>
+						{!! Form::text('username', old('username',email_settings('username')), ['class' => 'form-control input-square', 'id' => 'username']) !!}
+						<span class="text-danger">{{ $errors->first('username') }}</span>
+					</div>
+					<div class="form-group row">
+						<label for="app_password" class="col-sm-2 col-form-label"> @lang('admin_messages.email_setting.password') <em class="text-danger"> * </em></label>
+						{!! Form::text('app_password', old('app_password',email_settings('password')), ['class' => 'form-control input-square', 'id' => 'app_password']) !!}
+						<span class="text-danger">{{ $errors->first('app_password') }}</span>
+					</div>
 					</div>
 					<div class="card-action">
 						<button type="submit" class="btn btn-success float-right"> @lang('admin_messages.submit') </button>
-						<a class="btn btn-danger" href="{{ route('admin.email_settings') }}"> @lang('admin_messages.cancel') </a>
+						<a class="btn btn-danger" href="{{ $base_url }}"> @lang('admin_messages.cancel') </a>
 					</div>
 					{!! Form::close() !!}
 				</div>
