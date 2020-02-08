@@ -63,8 +63,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $menu_data = array(
             ["route" => 'admin.dashboard', "value" => Lang::get("admin_messages.dashboard"), "icon" => "fas fa-home"],
+            ["route" => 'admin.admin_users', "value" => Lang::get("admin_messages.admin_users"), "icon" => "fas fa-users-cog"],
             ["route" => 'admin.invoice', "value" => Lang::get("admin_messages.invoice"), "icon" => "fas fa-file-invoice"],
-            ["route" => 'admin.agencies', "value" => Lang::get("admin_messages.agencies"), "icon" => "fas fa-id-card"],
+            // ["route" => 'admin.agencies', "value" => Lang::get("admin_messages.agencies"), "icon" => "fas fa-id-card"],
             ["route" => 'admin.customers', "value" => Lang::get("admin_messages.customers"), "icon" => "fas fa-users"],
             ["route" => 'admin.reports', "value" => Lang::get("admin_messages.reports"), "icon" => "fas fa-clipboard-list"],
             ["route" => 'admin.fees', "value" => Lang::get("admin_messages.fees"), "icon" => "fas fa-dollar-sign"],

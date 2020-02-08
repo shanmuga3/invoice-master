@@ -27,7 +27,7 @@
 							@checkPermission('create-customers')
 							<a class="btn btn-primary btn-round ml-auto" href="{{ route('admin.customers.create') }}">
 								<i class="fa fa-plus"></i>
-								@lang("admin_messages.add_admin_user")
+								@lang("admin_messages.add_customer")
 							</a>
 							@endcheckPermission
 						</div>
