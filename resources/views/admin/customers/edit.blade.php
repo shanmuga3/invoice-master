@@ -3,7 +3,7 @@
 <div class="content">
 	<div class="page-inner">
 		<div class="page-header">
-			<h4 class="page-title"> @lang("admin_messages.admin_users") @lang("admin_messages.management") </h4>
+			<h4 class="page-title"> @lang("admin_messages.customers") @lang("admin_messages.management") </h4>
 			<ul class="breadcrumbs">
 				<li class="nav-home">
 					<a href="{{ route('admin.dashboard') }}">
@@ -14,7 +14,7 @@
 					<i class="flaticon-right-arrow"></i>
 				</li>
 				<li class="nav-item">
-					<a href="{{ route('admin.admin_users') }}">@lang("admin_messages.admin_users")</a>
+					<a href="{{ route('admin.customers') }}">@lang("admin_messages.customers")</a>
 				</li>
 				<li class="separator">
 					<i class="flaticon-right-arrow"></i>
@@ -29,12 +29,12 @@
 				<div class="card">
 					<div class="card-header">
 						<div class="d-flex align-items-center">
-							<h4 class="card-title"> @lang("admin_messages.admin_users") </h4>
+							<h4 class="card-title"> @lang("admin_messages.customers") </h4>
 							
 						</div>
 					</div>
-					{!! Form::open(['url' => route('admin.admin_users.update',['id' => $result->id]), 'class' => 'form-horizontal','id'=>'user_form','method' => "PUT"]) !!}
-					@include('admin.admin_users.form')
+					{!! Form::open(['url' => route('admin.customers.update',['id' => $result->id]), 'class' => 'form-horizontal','id'=>'customers-form','method' => "PUT"]) !!}
+					@include('admin.customers.form')
 					{!! Form::close() !!}
 				</div>
 			</div>

@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('alt_number',15)->unique()->nullable();
             $table->string('password');
             $table->string('address_line_1',50);
-            $table->string('address_line_2',50);
+            $table->string('address_line_2',50)->nullable();
             $table->string('city',30);
             $table->string('state',20);
             $table->string('postal_code',10);

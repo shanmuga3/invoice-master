@@ -12,13 +12,23 @@ use Lang;
 class AdminUsersController extends Controller
 {
     /**
+     * Constructor
+     *
+     */
+    public function __construct()
+    {
+        $this->base_path = 'admin.admin_users.';
+        $this->base_url = route('admin.admin_users');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(AdminUsersDataTable $dataTable)
     {
-        return $dataTable->render('admin.admin_users.view');
+        return $dataTable->render($this->base_path.'view');
     }
 
     /**
@@ -30,7 +40,7 @@ class AdminUsersController extends Controller
     {
         $data['result'] = new Admin;
         $data['roles'] = Role::get()->pluck('name','id');
-        return view('admin.admin_users.add', $data);
+        return view($this->base_path.'add', $data);
     }
 
     /**
@@ -66,7 +76,7 @@ class AdminUsersController extends Controller
         $admin->attachRole($request->role);
 
         flashMessage('success', Lang::get('admin_messages.success'), Lang::get('admin_messages.added_successfully'));
-        return redirect()->route('admin.admin_users');
+        return redirect($this->base_url);
     }
 
     /**
@@ -80,7 +90,7 @@ class AdminUsersController extends Controller
         $data['result'] = Admin::with('roles')->findOrFail($id);
         $data['role_id'] = $data['result']->roles[0]->id;
         $data['roles'] = Role::get()->pluck('name','id');
-        return view('admin.admin_users.edit', $data);
+        return view($this->base_path.'edit', $data);
     }
 
     /**
@@ -123,7 +133,7 @@ class AdminUsersController extends Controller
 
         flashMessage('success', Lang::get('admin_messages.success'), Lang::get('admin_messages.updated_successfully'));
 
-        return redirect()->route('admin.admin_users');
+        return redirect($this->base_url);
     }
 
     /**
@@ -138,7 +148,7 @@ class AdminUsersController extends Controller
         
         if(!$can_destroy['status']) {
             flashMessage('danger', Lang::get('admin_messages.failed'), $can_destroy['status_message']);
-            return redirect()->route('admin.admin_users');
+            return redirect($this->base_url);
         }
         
         try {
@@ -149,7 +159,7 @@ class AdminUsersController extends Controller
             flashMessage('danger', Lang::get('admin_messages.failed'), $e->getMessage());
         }
 
-        return redirect()->route('admin.admin_users');
+        return redirect($this->base_url);
     }
 
     /**
