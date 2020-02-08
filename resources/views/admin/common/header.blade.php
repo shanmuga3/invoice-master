@@ -167,7 +167,7 @@
 				@foreach($menu_data as $menu)
 				<li class="nav-item {{ (isActiveRoute($menu['route'])) ? 'active' : '' }}">
 					<a href="{{ route($menu['route']) }}">
-						<i class="$menu['icon']"></i>
+						<i class="{{ $menu['icon'] }}"></i>
 						<p> {{ $menu['value'] }} </p>
 					</a>
 				</li>

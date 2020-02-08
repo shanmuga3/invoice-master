@@ -58,13 +58,13 @@ class AppServiceProvider extends ServiceProvider
     {
         $menu_data = array(
             ["route" => 'admin.dashboard', "value" => "Dashboard", "icon" => "fas fa-home"],
-            ["route" => 'admin.invoice', "value" => "Invoice", "icon" => "fas fa-home"],
-            ["route" => 'admin.agencies', "value" => "Agencies", "icon" => "fas fa-home"],
-            ["route" => 'admin.customers', "value" => "Customers", "icon" => "fas fa-home"],
-            ["route" => 'admin.reports', "value" => "Reports", "icon" => "fas fa-home"],
-            ["route" => 'admin.fees', "value" => "Fees Settings", "icon" => "fas fa-home"],
-            ["route" => 'admin.email_settings', "value" => "Email Settings", "icon" => "fas fa-home"],
-            ["route" => 'admin.site_settings', "value" => "Site Settings", "icon" => "fas fa-home"],
+            ["route" => 'admin.invoice', "value" => "Invoice", "icon" => "fas fa-file-invoice"],
+            ["route" => 'admin.agencies', "value" => "Agencies", "icon" => "fas fa-id-card"],
+            ["route" => 'admin.customers', "value" => "Customers", "icon" => "fas fa-users"],
+            ["route" => 'admin.reports', "value" => "Reports", "icon" => "fas fa-clipboard-list"],
+            ["route" => 'admin.fees', "value" => "Fees Settings", "icon" => "fas fa-dollar-sign"],
+            ["route" => 'admin.email_settings', "value" => "Email Settings", "icon" => "fas fa-envelope"],
+            ["route" => 'admin.site_settings', "value" => "Site Settings", "icon" => "fas fa-sliders-h"],
         );
 
         View::share('menu_data', $menu_data);
