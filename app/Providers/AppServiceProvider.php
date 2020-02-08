@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Collection;
 use App\Models\SiteSettings;
 use App\Models\EmailSettings;
-use App\Models\Fees;
+use App\Models\TaxTypes;
 use Schema;
 use Config;
 use View;
@@ -74,7 +74,7 @@ class AppServiceProvider extends ServiceProvider
             // ["route" => 'admin.agencies', "value" => Lang::get("admin_messages.agencies"), "icon" => "fas fa-id-card"],
             ["route" => 'admin.customers', "value" => Lang::get("admin_messages.customers"), "icon" => "fas fa-users"],
             ["route" => 'admin.reports', "value" => Lang::get("admin_messages.reports"), "icon" => "fas fa-clipboard-list"],
-            ["route" => 'admin.fees', "value" => Lang::get("admin_messages.fees"), "icon" => "fas fa-dollar-sign"],
+            ["route" => 'admin.tax_types', "value" => Lang::get("admin_messages.tax_types"), "icon" => "fas fa-dollar-sign"],
             ["route" => 'admin.email_settings', "value" => Lang::get("admin_messages.email_settings"), "icon" => "fas fa-envelope"],
             ["route" => 'admin.site_settings', "value" => Lang::get("admin_messages.site_settings"), "icon" => "fas fa-sliders-h"],
         );
@@ -96,8 +96,8 @@ class AppServiceProvider extends ServiceProvider
             return EmailSettings::get();
         });
 
-        $this->app->singleton('fees', function() {
-            return Fees::get();
+        $this->app->singleton('tax_types', function() {
+            return TaxTypes::get();
         });
     }
 

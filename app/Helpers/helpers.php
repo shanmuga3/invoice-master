@@ -89,19 +89,19 @@ if (!function_exists('site_settings')) {
 }
 
 /**
- * Resolve Fees and get value of given string
+ * Resolve Tax Types and get value of given string
  *
  * @param  string $key Name of the value to get
  * @return String
  */
-if (!function_exists('fees')) {
+if (!function_exists('tax_types')) {
 
-	function fees($key)
+	function tax_types($key)
 	{
-		$fees = resolve('fees');
-		$fee = $fees->where('name',$key)->first();
+		$tax_types = resolve('tax_types');
+		$tax_type = $tax_types->where('name',$key)->first();
 		
-		return optional($fee)->value;
+		return optional($tax_type)->value;
 	}
 }
 

@@ -87,10 +87,10 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
 	Route::get('reports', "ReportsController@index")->name('reports')->middleware('permission:view-reports');
 	
-	// Manage Fees Routes
-    Route::group(['prefix' => 'fees'], function () {
-        Route::get('/', 'FeesController@index')->name('fees')->middleware('permission:view-fees');
-        Route::match(['PUT','PATCH'],'/', 'FeesController@update')->name('fees.update')->middleware('permission:update-fees');
+	// Manage Tax Types Routes
+    Route::group(['prefix' => 'tax_types'], function () {
+        Route::get('/', 'TaxTypesController@index')->name('tax_types')->middleware('permission:view-tax_types');
+        Route::match(['PUT','PATCH'],'/', 'TaxTypesController@update')->name('tax_types.update')->middleware('permission:update-tax_types');
     });
 
     // Manage Email Settings Routes

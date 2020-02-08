@@ -3,7 +3,7 @@
 <div class="content">
 	<div class="page-inner">
 		<div class="page-header">
-			<h4 class="page-title"> @lang("admin_messages.fees") @lang("admin_messages.management") </h4>
+			<h4 class="page-title"> @lang("admin_messages.tax_types") @lang("admin_messages.management") </h4>
 			<ul class="breadcrumbs">
 				<li class="nav-home">
 					<a href="{{ route('admin.dashboard') }}">
@@ -14,7 +14,7 @@
 					<i class="flaticon-right-arrow"></i>
 				</li>
 				<li class="nav-item">
-					<a href="{{ route('admin.fees') }}">@lang("admin_messages.fees")</a>
+					<a href="{{ route('admin.tax_types') }}">@lang("admin_messages.tax_types")</a>
 				</li>
 				<li class="separator">
 					<i class="flaticon-right-arrow"></i>
@@ -29,11 +29,11 @@
 				<div class="card">
 					<div class="card-header">
 						<div class="d-flex align-items-center">
-							<h4 class="card-title"> @lang("admin_messages.fees") </h4>
+							<h4 class="card-title"> @lang("admin_messages.tax_types") </h4>
 							
 						</div>
 					</div>
-					{!! Form::open(['url' => route('admin.fees.update',['id' => $result->id]), 'class' => 'form-horizontal','id'=>'fees-form','method' => "PUT"]) !!}
+					{!! Form::open(['url' => route('admin.tax_types.update',['id' => $result->id]), 'class' => 'form-horizontal','id'=>'tax_types-form','method' => "PUT"]) !!}
 					<div class="card-body">
 						<div class="form-group row">
 							<label for="username" class="col-sm-2 col-form-label"> @lang('admin_messages.users.user_name') <em class="text-danger">*</em></label>
@@ -73,7 +73,7 @@
 					</div>
 					<div class="card-action">
 						<button type="submit" class="btn btn-success float-right"> @lang('admin_messages.submit') </button>
-						<a class="btn btn-danger" href="{{ route('admin.fees') }}"> @lang('admin_messages.cancel') </a>
+						<a class="btn btn-danger" href="{{ route('admin.tax_types') }}"> @lang('admin_messages.cancel') </a>
 					</div>
 					{!! Form::close() !!}
 				</div>

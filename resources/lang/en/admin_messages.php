@@ -21,7 +21,7 @@ return [
     'agencies'          => 'Agencies',
     'customers'         => 'Customers',
     'reports'           => 'Reports',
-    'fees'              => 'Fees',
+    'tax_types'         => 'Tax Types',
     'email_settings'    => 'Email Settings',
     'site_settings'     => 'Site Settings',
     'management'        => 'Management',

@@ -9,7 +9,7 @@ return [
             'customers'     => 'c,r,u,d',
             'invoice'       => 'c,r,u,d',
             'reports'       => 'r,e',
-            'fees'          => 'r,u',
+            'tax_types'     => 'r,u',
             'email_settings'=> 'r,u',
             'site_settings' => 'r,u',
         ],

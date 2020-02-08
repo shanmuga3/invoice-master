@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
             LaravelEntrustSeeder::class,
             SiteSettingsTableSeeder::class,
             EmailSettingsTableSeeder::class,
-            FeesTableSeeder::class,
         ]);
 
         $this->call([
