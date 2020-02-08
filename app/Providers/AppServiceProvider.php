@@ -68,8 +68,8 @@ class AppServiceProvider extends ServiceProvider
             ["route" => 'admin.customers', "value" => Lang::get("admin_messages.customers"), "icon" => "fas fa-users"],
             ["route" => 'admin.reports', "value" => Lang::get("admin_messages.reports"), "icon" => "fas fa-clipboard-list"],
             ["route" => 'admin.fees', "value" => Lang::get("admin_messages.fees"), "icon" => "fas fa-dollar-sign"],
-            ["route" => 'admin.email_settings', "value" => Lang::get("Email admin_messages.email_settings"), "icon" => "fas fa-envelope"],
-            ["route" => 'admin.site_settings', "value" => Lang::get("Site admin_messages.site_settings"), "icon" => "fas fa-sliders-h"],
+            ["route" => 'admin.email_settings', "value" => Lang::get("admin_messages.email_settings"), "icon" => "fas fa-envelope"],
+            ["route" => 'admin.site_settings', "value" => Lang::get("admin_messages.site_settings"), "icon" => "fas fa-sliders-h"],
         );
 
         $version = \Str::random(4);

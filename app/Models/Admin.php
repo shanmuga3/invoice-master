@@ -34,11 +34,47 @@ class Admin extends Authenticatable
     protected $hidden = ['password'];
 
     /**
+     * Status Of the Admin
+     *
+     * @var array
+     */
+    protected $status = ['Inactive','Active'];
+
+    /**
      * Store the encrypted password to table.
      *
      */
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    /**
+     * Store the encrypted password to table.
+     *
+     */
+    public function scopeActiveOnly($query)
+    {
+        return $query->where('status',1);
+    }
+
+    /**
+     * Get Status Text
+     *
+     */
+    public function getStatusTextAttribute()
+    {
+        $status = $this->attributes['status'];
+        return $this->status[$status];
+    }
+
+    /**
+     * Get Role Name
+     *
+     */
+    public function getRoleNameAttribute()
+    {
+        $roles = $this->roles()->first();
+        return $roles->name;
     }
 }

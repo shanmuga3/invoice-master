@@ -48,6 +48,31 @@
 
 {!! Html::script('admin_assets/js/common.js?v='.$version) !!}
 
+@if(Session::has('message'))
+<script type="text/javascript">
+	$(document).ready(function() {
+		var content = {};
+
+		state = "{!! Session::get('state') !!}";
+		content.message = "{!! Session::get('message') !!}";
+		content.title = "{!! Session::get('title') !!}";
+
+		content.icon = 'fa fa-bell';
+		console.log(content);
+		
+		$.notify(content,{
+			type: state,
+			placement: {
+				from: "top",
+				align: "center"
+			},
+			time: 2000,
+			delay: 0,
+		});
+	});
+</script>
+@endif
+
 @stack('scripts')
 </body>
 </html>

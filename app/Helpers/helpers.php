@@ -3,13 +3,15 @@
 /**
  * Set Flash Message function
  *
- * @param  string $class     Type of the class ['danger','success','warning','info']
+ * @param  string $state     Type of the state ['danger','success','warning','info']
+ * @param  string $title   title to be displayed
  * @param  string $message   message to be displayed
  */
 if(!function_exists('flashMessage')) {
-    function flashMessage($class, $message)
+    function flashMessage($state, $title, $message)
     {
-        Session::flash('alert-class', 'alert-'.$class);
+        Session::flash('state', $state);
+        Session::flash('title', $title);
         Session::flash('message', $message);
     }
 }

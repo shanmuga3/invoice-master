@@ -16,6 +16,12 @@ class AdminUsersDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
+        ->addColumn('role',function($admin_users) {
+            return $admin_users->role_name;
+        })
+        ->addColumn('status',function($admin_users) {
+            return $admin_users->status_text;
+        })
         ->addColumn('action',function($admin_users) {
             $edit = auth()->guard('admin')->user()->can('update-admin_users') ? '<a href="'.route('admin.admin_users.edit',['id' => $admin_users->id]).'" class=""> <i class="fa fa-edit"></i> </a>' : '';
             $delete = auth()->guard('admin')->user()->can('delete-admin_users') ? '<a href="" data-action="'.route('admin.admin_users.delete',['id' => $admin_users->id]).'" data-toggle="modal" data-target="#confirm-delete" class="text-danger"> <i class="fa fa-times"></i> </a>' : '';
@@ -57,9 +63,9 @@ class AdminUsersDataTable extends DataTable
     {
         return [
             'id',
-            'first_name',
-            'last_name',
+            'username',
             'email',
+            'role',
             'status',
         ];
     }
