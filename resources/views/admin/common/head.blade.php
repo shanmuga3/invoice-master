@@ -22,5 +22,5 @@
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-<body>
+<body ng-app="App" ng-controller="appController">
 	<div class="wrapper">

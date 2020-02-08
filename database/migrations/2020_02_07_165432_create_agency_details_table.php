@@ -25,8 +25,8 @@ class CreateAgencyDetailsTable extends Migration
             $table->string('state',20);
             $table->string('postal_code',10);
             $table->string('country_code',5);
-            $table->string('contact_number',15);
-            $table->string('alt_number',15);
+            $table->string('mobile_number',15)->unique();
+            $table->string('alt_number',15)->unique();
         });
     }
 

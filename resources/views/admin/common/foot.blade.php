@@ -21,9 +21,6 @@
 <!-- Chart Circle -->
 <script src="{{ asset('js/plugin/chart-circle/circles.min.js') }}"></script>
 
-<!-- Datatables -->
-<script src="{{ asset('js/plugin/datatables/datatables.min.js') }}"></script>
-
 <!-- Bootstrap Notify -->
 <script src="{{ asset('js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 
@@ -34,14 +31,23 @@
 <script src="{{ asset('js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
 <script src="{{ asset('js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 
-<!-- Google Maps Plugin -->
-<script src="{{ asset('js/plugin/gmaps/gmaps.js') }}"></script>
-
 <!-- Sweet Alert -->
 <script src="{{ asset('js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
 <!-- Azzara JS -->
 <script src="{{ asset('js/ready.min.js') }}"></script>
 
+<!-- Include JS files -->
+{!! Html::script('js/core/angular.min.js') !!}
+{!! Html::script('js/core/angular-sanitize.min.js') !!}
+
+<script type="text/javascript">
+    var app = angular.module('App', []);
+    var APP_URL = {!! json_encode(url('/')) !!};
+</script>
+
+{!! Html::script('admin_assets/js/common.js?v='.$version) !!}
+
+@stack('scripts')
 </body>
 </html>

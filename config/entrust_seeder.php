@@ -9,9 +9,9 @@ return [
             'customers'     => 'c,r,u,d',
             'invoice'       => 'c,r,u,d',
             'reports'       => 'r,e',
-            'fees'          => 'm',
-            'email_settings'=> 'm',
-            'site_settings' => 'm',
+            'fees'          => 'r,u',
+            'email_settings'=> 'r,u',
+            'site_settings' => 'r,u',
         ],
     ],
     'user_roles' => [
@@ -30,7 +30,6 @@ return [
         'r' => 'view',
         'u' => 'update',
         'd' => 'delete',
-        'm' => 'manage',
         'e' => 'export',
     ],
 ];

@@ -3,12 +3,14 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Collection;
 use App\Models\SiteSettings;
 use App\Models\EmailSettings;
 use App\Models\Fees;
 use Schema;
 use Config;
 use View;
+use Lang;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,6 +45,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->shareCommonData();
 
+        $this->registerCollectionMacro();
+        $this->registerBladeDirectives();
+
         if(env('DB_DATABASE') != '') {
             if(Schema::hasTable('site_settings')) {
                 $this->bindModels();
@@ -57,17 +62,20 @@ class AppServiceProvider extends ServiceProvider
     protected function shareCommonData()
     {
         $menu_data = array(
-            ["route" => 'admin.dashboard', "value" => "Dashboard", "icon" => "fas fa-home"],
-            ["route" => 'admin.invoice', "value" => "Invoice", "icon" => "fas fa-file-invoice"],
-            ["route" => 'admin.agencies', "value" => "Agencies", "icon" => "fas fa-id-card"],
-            ["route" => 'admin.customers', "value" => "Customers", "icon" => "fas fa-users"],
-            ["route" => 'admin.reports', "value" => "Reports", "icon" => "fas fa-clipboard-list"],
-            ["route" => 'admin.fees', "value" => "Fees Settings", "icon" => "fas fa-dollar-sign"],
-            ["route" => 'admin.email_settings', "value" => "Email Settings", "icon" => "fas fa-envelope"],
-            ["route" => 'admin.site_settings', "value" => "Site Settings", "icon" => "fas fa-sliders-h"],
+            ["route" => 'admin.dashboard', "value" => Lang::get("admin_messages.dashboard"), "icon" => "fas fa-home"],
+            ["route" => 'admin.invoice', "value" => Lang::get("admin_messages.invoice"), "icon" => "fas fa-file-invoice"],
+            ["route" => 'admin.agencies', "value" => Lang::get("admin_messages.agencies"), "icon" => "fas fa-id-card"],
+            ["route" => 'admin.customers', "value" => Lang::get("admin_messages.customers"), "icon" => "fas fa-users"],
+            ["route" => 'admin.reports', "value" => Lang::get("admin_messages.reports"), "icon" => "fas fa-clipboard-list"],
+            ["route" => 'admin.fees', "value" => Lang::get("admin_messages.fees"), "icon" => "fas fa-dollar-sign"],
+            ["route" => 'admin.email_settings', "value" => Lang::get("Email admin_messages.email_settings"), "icon" => "fas fa-envelope"],
+            ["route" => 'admin.site_settings', "value" => Lang::get("Site admin_messages.site_settings"), "icon" => "fas fa-sliders-h"],
         );
 
+        $version = \Str::random(4);
+
         View::share('menu_data', $menu_data);
+        View::share('version', $version);
     }
 
     // Bind or Singleton common Models
@@ -83,6 +91,24 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton('fees', function() {
             return Fees::get();
+        });
+    }
+
+    /**
+     * Register Collective Form Macro to day,month and year dropdown with attributes
+     *
+     * @return void
+     */
+    protected function registerBladeDirectives()
+    {
+        // Blade Directive to check Permission of current Admin User
+        \Blade::if('checkPermission', function($permission) {
+            return auth()->guard('admin')->user()->can($permission);
+        });
+
+        // Blade Directive to check Given Id is currently login user or not
+        \Blade::if('checkUser', function($id) {
+            return auth()->id() === $id;
         });
     }
 
