@@ -85,7 +85,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     	Route::delete('{id}', 'InvoiceTemplatesController@destroy')->name('invoice_templates.delete')->middleware('permission:delete-invoice_templates');
     });
 
-	Route::get('reports', "AdminController@index")->name('reports')->middleware('permission:view-reports');
+	Route::get('reports', "ReportsController@index")->name('reports')->middleware('permission:view-reports');
 	
 	// Manage Fees Routes
     Route::group(['prefix' => 'fees'], function () {
