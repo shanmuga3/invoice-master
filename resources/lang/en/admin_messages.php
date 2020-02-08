@@ -70,6 +70,19 @@ return [
         'only_one_role'     => 'Atleast One Active Role,So Cannot Delete',
     ],
 
+    'site_setting' => [
+        'site_name'             => 'Site Name',
+        'site_version'          => 'Version',
+        'admin_url'             => 'Admin URL',
+        'primary_logo'          => 'Primary Logo',
+        'secondary_logo'        => 'Secondary Logo',
+        'favicon'               => 'Favicon',
+        'support_number'        => 'Support Number',
+        'default_currency'      => 'Default Currency',
+        'payment_currency'      => 'Payment Currency',
+        'default_language'      => 'Default Language',
+    ],
+
     'email_setting'  => [
         'driver'                => 'Driver',
         'host'                  => 'Host',

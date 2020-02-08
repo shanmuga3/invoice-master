@@ -41,8 +41,6 @@ class AppServiceProvider extends ServiceProvider
             // $this->app['request']->server->set('HTTPS', true);
         }
 
-        $this->bindModels();
-
         $this->shareCommonData();
 
         $this->registerCollectionMacro();
@@ -51,6 +49,14 @@ class AppServiceProvider extends ServiceProvider
         if(env('DB_DATABASE') != '') {
             if(Schema::hasTable('site_settings')) {
                 $this->bindModels();
+                
+                $site_settings = resolve('site_settings');
+                if($site_settings->count() && $site_settings[1]->value == '' && @$_SERVER['HTTP_HOST'] && !\App::runningInConsole()) {
+                    $url  = "http://".$_SERVER['HTTP_HOST'];
+                    $url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+
+                    SiteSettings::where('name','site_url')->update(['value' =>  $url]);
+                }
             }
 
             if(Schema::hasTable('email_settings')) {
