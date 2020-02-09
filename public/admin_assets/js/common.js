@@ -80,3 +80,14 @@ app.controller("appController", function($scope, $http) {
         return value;
     };
 });
+
+app.controller("invoiceController", function($scope, $http) {
+    $scope.addInvoiceItem = function() {
+        console.log($scope.invoice_items);
+        $scope.invoice_items.push({'name':''});
+    };
+
+    $scope.removeInvoiceItem = function(index) {
+        $scope.invoice_items.splice(index, 1);
+    };
+});

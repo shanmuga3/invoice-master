@@ -1,6 +1,6 @@
 @extends("admin.template")
 @section("main")
-<div class="content">
+<div class="content" ng-controller="invoiceController">
 	<div class="page-inner">
 		<div class="page-header">
 			<h4 class="page-title"> @lang("admin_messages.invoice") @lang("admin_messages.management") </h4>

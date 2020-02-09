@@ -19,14 +19,16 @@
 					<div class="row">
 						<div class="col-md-4 info-invoice">
 							<h5 class="sub">Date</h5>
-							<p>Dec 21, 2017</p>
+							<p> {{ date('F d, Y') }} </p>
 						</div>
 						<div class="col-md-4 info-invoice">
+							{{--
 							<h5 class="sub">Invoice ID</h5>
 							<p>#FDS9876KD</p>
+							--}}
 						</div>
 						<div class="col-md-4 info-invoice">
-							<h5 class="sub">Invoice To</h5>
+							<h5 class="sub"> Invoice To </h5>
 							<p>
 								Jane Smith, 1234 Main, Apt. 4B<br/>Springfield, ST 54321
 							</p>
@@ -38,7 +40,7 @@
 								<div class="invoice-top">
 									<h3 class="title"><strong>Order summary</strong></h3>
 								</div>
-								<div class="invoice-item" ng-init="invoice_items={{ json_encode(['id' => '']) }}">
+								<div class="invoice-item" ng-init="invoice_items={{ json_encode(array(['name' => ''])) }}">
 									<div class="table-responsive">
 										<table class="table table-striped">
 											<thead>
@@ -49,6 +51,7 @@
 													<td class="text-center"><strong> Tax </strong></td>
 													<td class="text-center"><strong> Discount </strong></td>
 													<td class="text-right"><strong>Totals</strong></td>
+													<td class="text-right"><strong> Action </strong></td>
 												</tr>
 											</thead>
 											<tbody>
@@ -59,13 +62,15 @@
 													<td class="text-center"> <input type="text" name="invoice_item[]" ng-model="invoice_item.tax"> </td>
 													<td class="text-center"> <input type="text" name="invoice_item[]" ng-model="invoice_item.discount"> </td>
 													<td class="text-center"> <input type="text" name="invoice_item[]" ng-model="invoice_item.total"> </td>
+													<td class="text-center"> <a href="javascript:;" class="text-danger" ng-click="removeInvoiceItem($index);"> <i class="fa fa-times"></i> </a> </td>
 												</tr>
 											</tbody>
 										</table>
+										<button type="button" class="btn btn-primary m-2 p-1" ng-click="addInvoiceItem();"> Add Item </button>
 									</div>
 								</div>
 							</div>
-							<div class="separator-solid  mb-3"></div>
+							<div class="separator-solid mb-3"></div>
 						</div>
 					</div>
 				</div>
@@ -75,9 +80,8 @@
 							
 						</div>
 						<div class="col-sm-5 col-md-7 transfer-total">
-							<h5 class="sub">Total Amount</h5>
+							<h5 class="sub"> Total Amount </h5>
 							<div class="price">$685.99</div>
-							<span>Taxes Included</span>
 						</div>
 					</div>
 					<div class="separator-solid"></div>
