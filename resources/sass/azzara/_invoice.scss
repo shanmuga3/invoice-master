@@ -1,0 +1,84 @@
+.card-invoice {
+	.sub {
+		font-size: 14px;
+		margin-bottom: 8px;
+		font-weight: 600;
+	}
+	.info-invoice {
+		padding-top: 15px;
+		padding-bottom: 15px;
+		p {
+			font-size: 13px;
+		}
+	}
+	.invoice-detail {
+		width: 100%;
+		display: block;
+		.invoice-top {
+			.title {
+				font-size: 20px;
+			}
+		}
+	}
+	.transfer-to {
+		.sub {
+			font-size: 14px;
+			margin-bottom: 8px;
+			font-weight: 600;
+		}
+		.account-transfer {
+			>div {
+				span {
+					&:first-child {
+						font-weight: 600;
+						color: #333;
+						font-size: 13px;
+					}
+					&:last-child {
+						font-size: 13px;
+						float: right;
+					}
+				}
+			}
+		}
+	}
+	.transfer-total {
+		text-align: right;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		.sub {
+			font-size: 14px;
+			margin-bottom: 8px;
+			font-weight: 600;
+		}
+		.price {
+			font-size: 28px;
+			color: #177dff;
+			padding: 7px 0;
+			font-weight: 600;
+		}
+		span {
+			font-weight: 600;
+			font-size: 13px;
+		}
+	}
+	.card-body {
+		padding: 0;
+		border: 0 !important;
+		width: 75%;
+		margin: auto;
+	}
+	.card-header {
+		padding: 50px 0 20px;
+		border: 0 !important;
+		width: 75%;
+		margin: auto;
+	}
+	.card-footer {
+		padding: 5px 0 50px;
+		border: 0 !important;
+		width: 75%;
+		margin: auto;
+	}
+}

@@ -27,7 +27,7 @@ class CustomersController extends Controller
      */
     public function index(CustomersDataTable $dataTable)
     {
-        return $dataTable->render('admin.customers.view');
+        return $dataTable->render($this->base_path.'view');
     }
 
     /**

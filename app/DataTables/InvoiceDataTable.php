@@ -26,10 +26,10 @@ class InvoiceDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \User $model
+     * @param \Invoice $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model)
+    public function query(Invoice $model)
     {
         return $model->get();
     }
@@ -57,10 +57,14 @@ class InvoiceDataTable extends DataTable
     {
         return [
             'id',
-            'first_name',
-            'last_name',
-            'email',
+            'invoice_number',
+            'invoice_date',
+            'sub_total',
+            'discount',
+            'tax',
+            'total',
             'status',
+            'paid_status',
         ];
     }
 

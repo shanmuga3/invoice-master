@@ -4,17 +4,30 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\DataTables\InvoiceDataTable;
+use App\Models\Invoice;
+use Lang;
 
 class InvoiceController extends Controller
 {
+    /**
+     * Constructor
+     *
+     */
+    public function __construct()
+    {
+        $this->base_path = 'admin.invoice.';
+        $this->base_url = $this->view_data['base_url'] = route('admin.invoice');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(InvoiceDataTable $dataTable)
     {
-        //
+        return $dataTable->render($this->base_path.'view');
     }
 
     /**
@@ -24,7 +37,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        //
+        $data['result'] = new Invoice;
+        return view($this->base_path.'add', $data);
     }
 
     /**
