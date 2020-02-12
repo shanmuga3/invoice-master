@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\DataTables\InvoiceDataTable;
 use App\Models\Invoice;
+use App\Models\User;
+use App\Models\TaxTypes;
 use Lang;
 
 class InvoiceController extends Controller
@@ -38,6 +40,8 @@ class InvoiceController extends Controller
     public function create()
     {
         $data['result'] = new Invoice;
+        $data['customers'] = User::get();
+        $data['tax_types'] = TaxTypes::activeOnly()->get();
         return view($this->base_path.'add', $data);
     }
 
@@ -49,7 +53,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

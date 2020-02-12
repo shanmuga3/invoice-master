@@ -47,6 +47,7 @@ return [
     'delete_success'    => 'Deleted Successfully',
     'added_successfully'=> 'Added Successfully',
     'updated_successfully'=> 'Updated Successfully',
+    'select'            => 'Select',
 
     'users' => [
         'user_name'         => 'User Name',

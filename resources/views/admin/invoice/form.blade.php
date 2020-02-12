@@ -30,7 +30,12 @@
 						<div class="col-md-4 info-invoice">
 							<h5 class="sub"> Invoice To </h5>
 							<p>
-								Jane Smith, 1234 Main, Apt. 4B<br/>Springfield, ST 54321
+								<select name="customer" class="form-control py-0">
+									<option value=""> @lang('admin_messages.select') </option>
+									@foreach($customers as $customer)
+									<option value="{{ $customer->id }}"> {{ $customer->first_name }} </option>
+									@endforeach
+								</select>
 							</p>
 						</div>
 					</div>
@@ -48,7 +53,6 @@
 													<td><strong>Item</strong></td>
 													<td class="text-center"><strong>Price</strong></td>
 													<td class="text-center"><strong>Quantity</strong></td>
-													<td class="text-center"><strong> Tax </strong></td>
 													<td class="text-center"><strong> Discount </strong></td>
 													<td class="text-right"><strong>Totals</strong></td>
 													<td class="text-right"><strong> Action </strong></td>
@@ -56,12 +60,11 @@
 											</thead>
 											<tbody>
 												<tr ng-repeat="invoice_item in invoice_items">
-													<td class="text-center"> <input type="text" name="invoice_item[]" ng-model="invoice_item.name"> </td>
-													<td class="text-center"> <input type="text" name="invoice_item[]" ng-model="invoice_item.price"> </td>
-													<td class="text-center"> <input type="text" name="invoice_item[]" ng-model="invoice_item.quantity"> </td>
-													<td class="text-center"> <input type="text" name="invoice_item[]" ng-model="invoice_item.tax"> </td>
-													<td class="text-center"> <input type="text" name="invoice_item[]" ng-model="invoice_item.discount"> </td>
-													<td class="text-center"> <input type="text" name="invoice_item[]" ng-model="invoice_item.total"> </td>
+													<td class="text-center"> <input type="text" name="invoice_item[@{{$index}}][name]" ng-model="invoice_item.name"> </td>
+													<td class="text-center"> <input type="text" name="invoice_item[@{{$index}}][price]" ng-model="invoice_item.price" ng-change="updateInvoiceTotal();"> </td>
+													<td class="text-center"> <input type="text" name="invoice_item[@{{$index}}][quantity]" ng-model="invoice_item.quantity" ng-change="updateInvoiceTotal();"> </td>
+													<td class="text-center"> <input type="text" name="invoice_item[@{{$index}}][discount]" ng-model="invoice_item.discount" ng-change="updateInvoiceTotal();"> </td>
+													<td class="text-center"> <input type="text" name="invoice_item[@{{$index}}][total]" ng-model="invoice_item.total"> </td>
 													<td class="text-center"> <a href="javascript:;" class="text-danger" ng-click="removeInvoiceItem($index);"> <i class="fa fa-times"></i> </a> </td>
 												</tr>
 											</tbody>
@@ -75,13 +78,13 @@
 					</div>
 				</div>
 				<div class="card-footer">
-					<div class="row">
+					<div class="row" ng-init="tax_types={{ $tax_types }}">
 						<div class="col-sm-7 col-md-5 mb-3 mb-md-0 transfer-to">
 							
 						</div>
 						<div class="col-sm-5 col-md-7 transfer-total">
 							<h5 class="sub"> Total Amount </h5>
-							<div class="price">$685.99</div>
+							<div class="price">$ @{{ invoice_total }} </div>
 						</div>
 					</div>
 					<div class="separator-solid"></div>

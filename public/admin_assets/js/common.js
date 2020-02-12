@@ -90,4 +90,16 @@ app.controller("invoiceController", function($scope, $http) {
     $scope.removeInvoiceItem = function(index) {
         $scope.invoice_items.splice(index, 1);
     };
+
+    $scope.updateInvoiceTotal = function(index) {
+        var total = 0;
+        $.each($scope.invoice_items, function(key, invoice_item) {
+            let item_total = ((invoice_item.quantity * invoice_item.price) - invoice_item.discount);
+            $scope.invoice_items[key].total = item_total;
+            total += item_total;
+        });
+        if(!isNaN(total)) {
+            $scope.invoice_total = total;
+        }
+    };
 });
