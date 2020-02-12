@@ -30,7 +30,7 @@
 	<div class="form-group row">
 		<label for="status" class="col-sm-2 col-form-label"> @lang('admin_messages.status') <em class="text-danger">*</em></label>
 		<div class="col-sm-10">
-			{!! Form::select('status', array('1' => 'Active', '0' => 'Inactive'), @$result->status, ['class' => 'form-control', 'id' => 'status', 'placeholder' => Lang::get("admin_messages.status")]) !!}
+			{!! Form::select('status', array('1' => 'Active', '0' => 'Inactive'), @$result->status, ['class' => 'form-control py-0', 'id' => 'status', 'placeholder' => Lang::get("admin_messages.status")]) !!}
 			<span class="text-danger">{{ $errors->first('status') }}</span>
 		</div>
 	</div>

@@ -14,13 +14,7 @@
 					<i class="flaticon-right-arrow"></i>
 				</li>
 				<li class="nav-item">
-					<a href="{{ route('admin.tax_types') }}">@lang("admin_messages.tax_types")</a>
-				</li>
-				<li class="separator">
-					<i class="flaticon-right-arrow"></i>
-				</li>
-				<li class="nav-item">
-					<a href="#">@lang("admin_messages.edit")</a>
+					<a href="#">@lang("admin_messages.tax_types")</a>
 				</li>
 			</ul>
 		</div>
@@ -30,14 +24,26 @@
 					<div class="card-header">
 						<div class="d-flex align-items-center">
 							<h4 class="card-title"> @lang("admin_messages.tax_types") </h4>
+							@checkPermission('create-tax_types')
+							<a class="btn btn-primary btn-round ml-auto" href="{{ route('admin.tax_types.create') }}">
+								<i class="fa fa-plus"></i>
+								@lang("admin_messages.add_tax_type")
+							</a>
+							@endcheckPermission
 						</div>
 					</div>
-					{!! Form::open(['url' => route('admin.tax_types.update',[$result->id]), 'class' => 'form-horizontal','id'=>'tax_types-form','method' => "PUT"]) !!}
-					@include('admin.tax_types.form')
-					{!! Form::close() !!}
+					<div class="card-body">
+						<div class="table-responsive">
+							{!! $dataTable->table() !!}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 @endsection
+@push('scripts')
+	<script type="text/javascript" src="{{ asset('js/plugin/datatables/datatables.min.js') }}"></script>
+	{!! $dataTable->scripts() !!}
+@endpush

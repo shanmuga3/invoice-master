@@ -20,7 +20,7 @@
 					<i class="flaticon-right-arrow"></i>
 				</li>
 				<li class="nav-item">
-					<a href="#">@lang("admin_messages.edit")</a>
+					<a href="#">@lang("admin_messages.add")</a>
 				</li>
 			</ul>
 		</div>
@@ -32,7 +32,7 @@
 							<h4 class="card-title"> @lang("admin_messages.tax_types") </h4>
 						</div>
 					</div>
-					{!! Form::open(['url' => route('admin.tax_types.update',[$result->id]), 'class' => 'form-horizontal','id'=>'tax_types-form','method' => "PUT"]) !!}
+					{!! Form::open(['url' => route('admin.tax_types.store'), 'class' => 'form-horizontal','id'=>'tax_types-form','method' => "POST"]) !!}
 					@include('admin.tax_types.form')
 					{!! Form::close() !!}
 				</div>

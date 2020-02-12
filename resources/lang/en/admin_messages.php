@@ -40,10 +40,7 @@ return [
     'add_invoice'       => 'Add Invoice',
     'add_invoice_template' => 'Add Invoice Template',
     'add_customer'      => 'Add Customer',
-    'add_customer'      => 'Add Customer',
-    'add_customer'      => 'Add Customer',
-    'add_customer'      => 'Add Customer',
-    'add_customer'      => 'Add Customer',
+    'add_tax_type'      => 'Add Tax Type',
     'success'           => 'Success',
     'failed'            => 'Failed',
     'failed_to_update'  => 'Failed to Update',
@@ -92,5 +89,14 @@ return [
         'encryption'            => 'Encryption',
         'username'              => 'Username',
         'password'              => 'Password',
+    ],
+
+    'tax_type'     => [
+        'name'                  => 'Name',
+        'description'           => 'Description',
+        'value'                 => 'Value',
+        'type'                  => 'Type',
+        'fixed'                 => 'Fixed',
+        'percent'               => 'Percent',
     ],
 ];

@@ -15,13 +15,13 @@ class CreateTaxTypesTable extends Migration
     {
         Schema::create('tax_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->decimal('percent', 5, 2);
-            $table->tinyInteger('compound_tax')->default(0);
-            $table->tinyInteger('collective_tax')->default(0);
-            $table->text('description')->nullable();
             $table->unsignedBigInteger('agency_id')->nullable();
             $table->foreign('agency_id')->references('id')->on('agency_details');
+            $table->string('name');
+            $table->enum('type',['fixed','percent']);
+            $table->decimal('value');
+            $table->text('description')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

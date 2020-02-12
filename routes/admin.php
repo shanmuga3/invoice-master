@@ -90,7 +90,11 @@ Route::group(['middleware' => 'auth:admin'], function () {
 	// Manage Tax Types Routes
     Route::group(['prefix' => 'tax_types'], function () {
         Route::get('/', 'TaxTypesController@index')->name('tax_types')->middleware('permission:view-tax_types');
-        Route::match(['PUT','PATCH'],'/', 'TaxTypesController@update')->name('tax_types.update')->middleware('permission:update-tax_types');
+        Route::get('create', 'TaxTypesController@create')->name('tax_types.create')->middleware('permission:create-tax_types');
+        Route::post('/', 'TaxTypesController@store')->name('tax_types.store')->middleware('permission:create-tax_types');
+        Route::get('{id}/edit', 'TaxTypesController@edit')->name('tax_types.edit')->middleware('permission:update-tax_types');
+        Route::match(['PUT','PATCH'],'{id}', 'TaxTypesController@update')->name('tax_types.update')->middleware('permission:update-tax_types');
+        Route::delete('{id}', 'TaxTypesController@destroy')->name('tax_types.delete')->middleware('permission:delete-tax_types');
     });
 
     // Manage Email Settings Routes
