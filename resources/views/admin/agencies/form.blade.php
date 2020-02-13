@@ -23,14 +23,14 @@
 	<div class="form-group row">
 		<label for="role" class="col-sm-2 col-form-label"> @lang('admin_messages.users.role') <em class="text-danger">*</em></label>
 		<div class="col-sm-10">
-			{!! Form::select('role', $roles, @$role_id, ['class' => 'form-control', 'id' => 'role', 'placeholder' => 'Role']) !!}
+			{!! Form::select('role', $roles, @$role_id, ['class' => 'form-control py-2', 'id' => 'role', 'placeholder' => 'Role']) !!}
 			<span class="text-danger">{{ $errors->first('role') }}</span>
 		</div>
 	</div>
 	<div class="form-group row">
 		<label for="status" class="col-sm-2 col-form-label"> @lang('admin_messages.status') <em class="text-danger">*</em></label>
 		<div class="col-sm-10">
-			{!! Form::select('status', array('1' => 'Active', '0' => 'Inactive'), @$result->status, ['class' => 'form-control', 'id' => 'status', 'placeholder' => Lang::get("admin_messages.status")]) !!}
+			{!! Form::select('status', array('1' => 'Active', '0' => 'Inactive'), @$result->status, ['class' => 'form-control py-2', 'id' => 'status', 'placeholder' => Lang::get("admin_messages.status")]) !!}
 			<span class="text-danger">{{ $errors->first('status') }}</span>
 		</div>
 	</div>
