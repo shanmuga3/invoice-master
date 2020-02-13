@@ -23364,6 +23364,10 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:last-
   font-size: 20px;
 }
 
+.card-invoice .invoice-detail .invoice-item_list input {
+  max-width: 100px;
+}
+
 .card-invoice .transfer-to .sub {
   font-size: 14px;
   margin-bottom: 8px;

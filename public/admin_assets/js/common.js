@@ -9,6 +9,14 @@ $(document).ready(function () {
     });
 });
 
+app.filter('checkKeyValueUsedInStack', ["$filter", function($filter) {
+    return function(value, key, stack) {
+        var found = $filter('filter')(stack, {name: value});
+        var found_text = $filter('filter')(stack, {key: ''+value}, true);
+        return !found.length && !found_text.length;
+    };
+}]);
+
 app.controller("appController", function($scope, $http) {
 
 	$('#confirm-delete').on('shown.bs.modal', function (e) {
@@ -83,7 +91,6 @@ app.controller("appController", function($scope, $http) {
 
 app.controller("invoiceController", function($scope, $http) {
     $scope.addInvoiceItem = function() {
-        console.log($scope.invoice_items);
         $scope.invoice_items.push({'name':''});
     };
 
@@ -101,5 +108,10 @@ app.controller("invoiceController", function($scope, $http) {
         if(!isNaN(total)) {
             $scope.invoice_total = total;
         }
+    };
+    
+    $scope.addTaxItem = function() {
+        console.log($scope.all_tax_types);
+        $scope.added_tax_items.push({'name':''});
     };
 });
