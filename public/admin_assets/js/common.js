@@ -90,6 +90,13 @@ app.controller("appController", function($scope, $http) {
 });
 
 app.controller("invoiceController", function($scope, $http) {
+
+    $(document).ready(function() {
+        $scope.invoice_total = 0;
+        $scope.invoice_sub_total = 0;
+        $scope.selectedTaxItems = [];
+        $scope.applyScope();
+    });
     $scope.addInvoiceItem = function() {
         $scope.invoice_items.push({'name':''});
     };
@@ -99,19 +106,48 @@ app.controller("invoiceController", function($scope, $http) {
     };
 
     $scope.updateInvoiceTotal = function(index) {
-        var total = 0;
+        var invoice_total = 0;
+        $scope.invoice_total = 0;
         $.each($scope.invoice_items, function(key, invoice_item) {
             let item_total = ((invoice_item.quantity * invoice_item.price) - invoice_item.discount);
             $scope.invoice_items[key].total = item_total;
-            total += item_total;
+            invoice_total += item_total;
         });
-        if(!isNaN(total)) {
-            $scope.invoice_total = total;
+        $scope.invoice_sub_total = invoice_total;
+        var tax_total = 0;
+        $.each($scope.added_tax_types, function(key, tax_type) {
+            let tax_item_total = tax_type.value;
+            $scope.added_tax_types[key].tax_value = $scope.currency_symbol+' '+tax_type.value;
+            
+            if(tax_type.type == 'percent') {
+                $scope.added_tax_types[key].tax_value = tax_type.value+'%';
+                tax_item_total = invoice_total*(tax_type.value / 100);
+            }
+
+            $scope.added_tax_types[key].total = $scope.currency_symbol+' '+tax_item_total;
+            tax_total += tax_item_total;
+        });
+
+        if(isNaN(invoice_total)) {
+            invoice_total = 0;
         }
+        if(isNaN(tax_total)) {
+            tax_total = 0;
+        }
+        $scope.invoice_total = invoice_total + tax_total;
     };
-    
+
     $scope.addTaxItem = function() {
-        console.log($scope.all_tax_types);
-        $scope.added_tax_items.push({'name':''});
+        var selected = $scope.tax_types[$scope.selected_tax];
+        $scope.selectedTaxItems.push(selected.name);
+        $scope.selected_tax = '';
+        $scope.added_tax_types.push(selected);
+        $scope.updateInvoiceTotal();
+    };
+
+    $scope.removeTaxItem = function(index) {
+        var selected_index = $scope.selectedTaxItems.indexOf($scope.added_tax_types[index].name);
+        $scope.selectedTaxItems.splice(selected_index, 1);
+        $scope.added_tax_types.splice(index, 1);
     };
 });

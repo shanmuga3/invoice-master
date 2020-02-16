@@ -41,13 +41,13 @@
 							</p>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" ng-init="currency_symbol= '{{ $currency_symbol }}';invoice_items={{ json_encode(array(['name' => ''])) }};added_tax_types={{ json_encode(array()) }};">
 						<div class="col-md-12">
 							<div class="invoice-detail">
 								<div class="invoice-top">
 									<h3 class="title"><strong>Order summary</strong></h3>
 								</div>
-								<div class="invoice-item" ng-init="invoice_items={{ json_encode(array(['name' => ''])) }}">
+								<div class="invoice-item">
 									<div class="table-responsive">
 										<table class="table table-striped invoice-item_list">
 											<thead>
@@ -83,6 +83,7 @@
 				</div>
 				<div class="card-footer">
 					<div class="row" ng-init="tax_types={{ $tax_types }}">
+						{!! Form::hidden('tax_items','',['ng-value'=>'selectedTaxItems.toString()']) !!}
 						<div class="col-sm-7 col-md-5 mb-3 mb-md-0 transfer-to">
 							
 						</div>
@@ -94,20 +95,23 @@
 											<span class="font-weight-bolder"> Sub total </span>
 										</td>
 										<td class="empty-row"> </td>
-										<td class="right"> {{ $curreny_symbol }} @{{ invoice_total }} </td>
+										<td class="right"> {{ $currency_symbol }} @{{ invoice_sub_total }} </td>
 									</tr>
 									<tr ng-repeat="tax_type in added_tax_types">
 										<td class="left">
 											<span class="font-weight-bolder"> @{{ tax_type.name }} </span>
 										</td>
-										<td class="empty-row"> {{ $curreny_symbol }} @{{ tax_type.value }} </td>
-										<td class="right"> {{ $curreny_symbol }} @{{ tax_type.total }} </td>
+										<td class="empty-row"> @{{ tax_type.tax_value }} </td>
+										<td class="right">
+											@{{ tax_type.total }}
+											<a href="javascript:;" class="text-danger" ng-click="removeTaxItem($index);"> <i class="fa fa-times"></i> </a>
+										</td>
 									</tr>
 									<tr>
-										<td class="left">
-											<select class="form-control py-2" ng-model="all_tax_types" ng-chage="addTaxItem()">
+										<td class="left" ng-hide="tax_types.length == selectedTaxItems.length">
+											<select class="form-control py-2" ng-model="selected_tax" ng-change="addTaxItem()">
 												<option value=""> Select </option>
-					                            <option ng-repeat="(key,tax_type) in tax_types" value="@{{ tax_type.name }}" ng-if="( key | checkKeyValueUsedInStack : 'name': tax_types) || all_tax_types == key"> @{{ tax_type.name }} </option>
+					                            <option ng-repeat="(key,tax_type) in tax_types" value="@{{ key }}" ng-show="selectedTaxItems.indexOf(tax_type.name) == -1"> @{{ tax_type.name }} </option>
 											</select>
 										</td>
 										<td class="empty-row"> </td>
@@ -119,7 +123,7 @@
 										</td>
 										<td class="empty-row"> </td>
 										<td class="right">
-											<span class="font-weight-bold"> {{ $curreny_symbol }} @{{ invoice_total }} </span>
+											<span class="font-weight-bold"> {{ $currency_symbol }} @{{ invoice_total }} </span>
 										</td>
 									</tr>
 								</tbody>
