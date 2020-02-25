@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use Lang;
 
 class AdminController extends Controller
 {
@@ -33,13 +34,13 @@ class AdminController extends Controller
             
             if(!$admin->status) {
                 auth()->guard('admin')->logout();
-                flashMessage('danger','You Are Blocked by Admin.');
+                flashMessage('danger', Lang::get('admin_messages.failed'), "you are Blocked by Admin. Please contact admin to login");
                 return redirect()->route('admin.login');
             }
 
             return redirect()->route('admin.dashboard');
         }
-        flashMessage('danger','Invalid Username / password.');
+        flashMessage('danger', Lang::get('admin_messages.failed'), "Invalid Username / password");
        	return redirect()->route('admin.login');        
     }
 
