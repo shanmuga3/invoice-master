@@ -21,7 +21,6 @@ class CreateInvoiceItemsTable extends Migration
             $table->foreign('agency_id')->references('id')->on('agency_details')->onDelete('cascade');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('discount_type');
             $table->unsignedDecimal('price');
             $table->unsignedDecimal('quantity', 15, 2);
             $table->unsignedDecimal('discount', 15, 2)->nullable();

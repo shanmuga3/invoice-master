@@ -26,15 +26,13 @@ class CreateInvoicesTable extends Migration
             $table->date('due_date');
             $table->string('status');
             $table->string('paid_status');
-            $table->unsignedDecimal('tax_per_item');
-            $table->unsignedDecimal('discount_per_item');
             $table->text('notes')->nullable();
             $table->string('discount_type')->nullable();
             $table->unsignedDecimal('discount', 15, 2)->nullable();
             $table->unsignedDecimal('discount_val')->nullable();
+            $table->unsignedDecimal('round_off');
             $table->unsignedDecimal('sub_total');
             $table->unsignedDecimal('total');
-            $table->unsignedDecimal('tax');
             $table->unsignedDecimal('due_amount');
             $table->boolean('sent')->default(false);
             $table->boolean('viewed')->default(false);

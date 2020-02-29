@@ -83,7 +83,10 @@
 				</div>
 				<div class="card-footer">
 					<div class="row" ng-init="tax_types={{ $tax_types }}">
+						{!! Form::hidden('agency','1') !!}
 						{!! Form::hidden('tax_items','',['ng-value'=>'selectedTaxItems.toString()']) !!}
+						{!! Form::hidden('sub_total','',['ng-value'=>'invoice_sub_total']) !!}
+						{!! Form::hidden('total','',['ng-value'=>'invoice_sub_total']) !!}
 						<div class="col-sm-7 col-md-5 mb-3 mb-md-0 transfer-to">
 							
 						</div>

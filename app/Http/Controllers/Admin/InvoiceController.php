@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\DataTables\InvoiceDataTable;
 use App\Models\Invoice;
+use App\Models\InvoiceItems;
 use App\Models\User;
 use App\Models\TaxTypes;
 use Lang;
+use Carbon\Carbon;
 
 class InvoiceController extends Controller
 {
@@ -53,18 +55,47 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-    }
+        $this->validateRequest($request);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $current_dateObj = Carbon::now();
+
+        $invoice = new Invoice;
+        $invoice->invoice_template_id = 1;
+        $invoice->user_id = $request->customer;
+        $invoice->agency_id = $request->agency;
+        $invoice->invoice_number = "INV".$request->customer;
+        $invoice->invoice_date = $current_dateObj->format('Y-m-d');
+        $invoice->due_date = $current_dateObj->addDays(7)->format('Y-m-d');
+        $invoice->status = "Pending";
+        $invoice->paid_status = "Pending";
+        $invoice->notes = $request->notes;
+        $invoice->sub_total = $request->sub_total;
+        $invoice->total = $request->total;
+        $invoice->discount_type = $request->discount_type;
+        $invoice->discount = $request->discount;
+        $invoice->discount_val = $request->discount_val;
+        $invoice->round_off = $request->round_off;
+        $invoice->unique_hash = \Str::uuid()->toString();
+
+        $invoice->save();
+
+        foreach ($request->invoice_item as $invoice_item) {
+            $item = new InvoiceItems;
+            $item->invoice_id   = $invoice->id;
+            $item->agency_id    = $invoice->agency_id;
+            $item->name         = $invoice_item["name"];
+            $item->description  = $invoice_item["description"] ?? '';
+            $item->price        = $invoice_item["price"];
+            $item->quantity     = $invoice_item["quantity"];
+            $item->discount     = $invoice_item["discount"];
+            $item->discount_val = $invoice_item["discount_val"] ?? '';
+            $item->tax          = $invoice_item["tax"] ?? '';
+            $item->save();
+        }
+
+        flashMessage('success', Lang::get('admin_messages.success'), Lang::get('admin_messages.updated_successfully'));
+
+        return redirect($this->base_url);
     }
 
     /**
@@ -75,7 +106,10 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $this->view_data['customers'] = User::get();
+        $this->view_data['tax_types'] = TaxTypes::activeOnly()->get();
+        $this->view_data['result'] = Invoice::with('invoice_items')->findOrFail($id);
+        return view($this->base_path.'edit', $this->view_data);
     }
 
     /**
@@ -87,17 +121,62 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        flashMessage('success', Lang::get('admin_messages.success'), Lang::get('admin_messages.updated_successfully'));
+
+        return redirect($this->base_url);
+    }
+
+    public function destroy($id)
+    {
+        $can_destroy = $this->canDestroy($id);
+        
+        if(!$can_destroy['status']) {
+            flashMessage('danger', Lang::get('admin_messages.failed'), $can_destroy['status_message']);
+            return redirect($this->base_url);
+        }
+        
+        try {
+            InvoiceItems::where('invoice_id',$id)->delete();
+            Invoice::where('id',$id)->delete();
+            flashMessage('success', Lang::get('admin_messages.success'), Lang::get('admin_messages.delete_success'));
+        }
+        catch (Exception $e) {
+            flashMessage('danger', Lang::get('admin_messages.failed'), $e->getMessage());
+        }
+
+        return redirect($this->base_url);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Validate the Given Request
+     *
+     * @param  Illuminate\Http\Request $request_data
+     * @param  Int $id
+     * @return Array
+     */
+    protected function validateRequest($request_data, $id = '')
+    {
+        $rules = array(
+            "customer"  => "required",
+            "agency"    => "required",
+        );
+
+        $attributes = array(
+            "customer"  => "Customer",
+            "agency"    => "Agency",
+        );
+
+        $this->validate($request_data,$rules,[],$attributes);
+    }
+
+    /**
+     * Check the specified resource Can be deleted or not.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Array
      */
-    public function destroy($id)
+    protected function canDestroy($id)
     {
-        //
+        return ['status' => true,'status_message' => ''];
     }
 }
