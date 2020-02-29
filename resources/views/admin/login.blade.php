@@ -27,11 +27,11 @@
 				<h3 class="text-center">Sign In To Admin</h3>
 				<div class="login-form">
 					<div class="form-group form-floating-label">
-						<input id="username" name="username" type="text" class="form-control input-border-bottom" required>
+						<input id="username" name="username" type="text" class="form-control input-border-bottom" value="admin" required>
 						<label for="username" class="placeholder">Username</label>
 					</div>
 					<div class="form-group form-floating-label">
-						<input id="password" name="password" type="password" class="form-control input-border-bottom" required>
+						<input id="password" name="password" type="password" class="form-control input-border-bottom" value="12345678" required>
 						<label for="password" class="placeholder">Password</label>
 						<div class="show-password">
 							<i class="flaticon-interface"></i>
@@ -75,5 +75,12 @@
 			});
 		</script>
 		@endif
+		<script type="text/javascript">
+			$(document).on('click','.show-password',function() {
+				$(this).toggleClass('active');
+		        var type = $(this).hasClass('active') ? 'text' : 'password';
+		        $('#password').attr("type",type);
+			});
+		</script>
 	</body>
 </html>
