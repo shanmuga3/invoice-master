@@ -31,8 +31,8 @@
 						</div>
 						<div class="col-md-4 info-invoice">
 							<h5 class="sub"> Invoice To </h5>
-							<p>
-								<select name="customer" class="form-control py-0">
+							<p ng-init="customer='{{ $result->user_id }}'">
+								<select name="customer" class="form-control py-0" ng-model="customer">
 									<option value=""> @lang('admin_messages.select') </option>
 									@foreach($customers as $customer)
 									<option value="{{ $customer->id }}"> {{ $customer->first_name }} </option>
@@ -41,7 +41,7 @@
 							</p>
 						</div>
 					</div>
-					<div class="row" ng-init="currency_symbol= '{{ $currency_symbol }}';invoice_items={{ json_encode(array(['name' => ''])) }};added_tax_types={{ json_encode(array()) }};">
+					<div class="row" ng-init="currency_symbol= '{{ $currency_symbol }}';invoice_items={{ $result->invoice_items  }};added_tax_types={{ json_encode(array()) }};">
 						<div class="col-md-12">
 							<div class="invoice-detail">
 								<div class="invoice-top">

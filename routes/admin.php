@@ -70,6 +70,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     	Route::get('/', 'InvoiceController@index')->name('invoice')->middleware('permission:view-invoice');
     	Route::get('create', 'InvoiceController@create')->name('invoice.create')->middleware('permission:create-invoice');
     	Route::post('/', 'InvoiceController@store')->name('invoice.store')->middleware('permission:create-invoice');
+        Route::get('{id}/show', 'InvoiceController@show')->name('invoice.show')->middleware('permission:view-invoice');
     	Route::get('{id}/edit', 'InvoiceController@edit')->name('invoice.edit')->middleware('permission:update-invoice');
     	Route::match(['PUT','PATCH'],'{id}', 'InvoiceController@update')->name('invoice.update')->middleware('permission:update-invoice');
     	Route::delete('{id}', 'InvoiceController@destroy')->name('invoice.delete')->middleware('permission:delete-invoice');

@@ -69,6 +69,7 @@ class InvoiceController extends Controller
         $invoice->status = "Pending";
         $invoice->paid_status = "Pending";
         $invoice->notes = $request->notes;
+        $invoice->currency_code= getCurrencyCode();
         $invoice->sub_total = $request->sub_total;
         $invoice->total = $request->total;
         $invoice->discount_type = $request->discount_type;
@@ -79,10 +80,13 @@ class InvoiceController extends Controller
 
         $invoice->save();
 
+        $invoice_total = 0;
+
         foreach ($request->invoice_item as $invoice_item) {
             $item = new InvoiceItems;
             $item->invoice_id   = $invoice->id;
             $item->agency_id    = $invoice->agency_id;
+            $item->currency_code= getCurrencyCode();
             $item->name         = $invoice_item["name"];
             $item->description  = $invoice_item["description"] ?? '';
             $item->price        = $invoice_item["price"];
@@ -90,12 +94,30 @@ class InvoiceController extends Controller
             $item->discount     = $invoice_item["discount"];
             $item->discount_val = $invoice_item["discount_val"] ?? '';
             $item->tax          = $invoice_item["tax"] ?? '';
+
+            $total_price        = ($item->price * $item->quantity) + $item->tax;
+            $item->sub_total    = $total_price;
+            $total_price -= $item->discount_val;
+            $item->total        = $total_price;
             $item->save();
+
+            $invoice_total += $total_price;
         }
 
         flashMessage('success', Lang::get('admin_messages.success'), Lang::get('admin_messages.updated_successfully'));
 
         return redirect($this->base_url);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $this->view_data['result'] = Invoice::with('invoice_items')->findOrFail($id);
     }
 
     /**

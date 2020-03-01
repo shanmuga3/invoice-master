@@ -17,9 +17,10 @@ class InvoiceDataTable extends DataTable
     {
         return datatables($query)
         ->addColumn('action',function($invoice) {
+            $view = auth()->guard('admin')->user()->can('view-invoice') ? '<a href="'.route('admin.invoice.show',['id' => $invoice->id]).'" class=""> <i class="fas fa-eye"></i> </a>' : '';
             $edit = auth()->guard('admin')->user()->can('update-invoice') ? '<a href="'.route('admin.invoice.edit',['id' => $invoice->id]).'" class=""> <i class="fa fa-edit"></i> </a>' : '';
             $delete = auth()->guard('admin')->user()->can('delete-invoice') ? '<a href="" data-action="'.route('admin.invoice.delete',['id' => $invoice->id]).'" data-toggle="modal" data-target="#confirm-delete" class="text-danger"> <i class="fa fa-times"></i> </a>' : '';
-            return $edit." &nbsp; ".$delete;
+            return $view." &nbsp; ".$edit." &nbsp; ".$delete;
         });
     }
 

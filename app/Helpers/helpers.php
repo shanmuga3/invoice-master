@@ -121,3 +121,16 @@ if (!function_exists('email_settings')) {
 		return optional($setting)->value;
 	}
 }
+
+/**
+ * Return Currency Code based on session
+ *
+ * @return String
+ */
+if (!function_exists('getCurrencyCode')) {
+
+	function getCurrencyCode()
+	{
+		return "INR";
+	}
+}
