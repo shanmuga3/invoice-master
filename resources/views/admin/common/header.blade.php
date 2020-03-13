@@ -2,9 +2,7 @@
 	<!-- Logo Header -->
 	<div class="logo-header">
 		
-		<a href="index.html" class="logo">
-			<img src="{{ asset('images/logoazzara.svg') }}" alt="navbar brand" class="navbar-brand">
-		</a>
+		<h3 class="font-weight-bold text-white logo"> {{ $site_name }} </h3>
 		<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon">
 				<i class="fa fa-bars"></i>

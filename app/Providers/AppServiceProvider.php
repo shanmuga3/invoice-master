@@ -57,6 +57,8 @@ class AppServiceProvider extends ServiceProvider
 
                     SiteSettings::where('name','site_url')->update(['value' =>  $url]);
                 }
+                $site_name = $site_settings->where('name','site_name')->first()->value;
+                View::share('site_name',$site_name);
             }
 
             if(Schema::hasTable('email_settings')) {
