@@ -20,7 +20,7 @@ class CreateInvoiceItemsTable extends Migration
             $table->unsignedBigInteger('agency_id')->nullable();
             $table->foreign('agency_id')->references('id')->on('agency_details')->onDelete('cascade');
             $table->string('name');
-            $table->string('currency_code');
+            $table->string('currency_code',5);
             $table->string('description')->nullable();
             $table->unsignedDecimal('price');
             $table->unsignedDecimal('quantity', 15, 2);

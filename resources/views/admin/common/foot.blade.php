@@ -1,5 +1,5 @@
 <!--   Core JS Files   -->
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/app.js?v='.$version) }}"></script>
 
 <script src="{{ asset('js/core/popper.min.js') }}"></script>
 <script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
@@ -58,7 +58,6 @@
 		content.title = "{!! Session::get('title') !!}";
 
 		content.icon = 'fa fa-bell';
-		console.log(content);
 		
 		$.notify(content,{
 			type: state,

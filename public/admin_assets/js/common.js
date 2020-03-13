@@ -103,15 +103,22 @@ app.controller("invoiceController", function($scope, $http) {
 
     $scope.removeInvoiceItem = function(index) {
         $scope.invoice_items.splice(index, 1);
+        $scope.updateInvoiceTotal();
     };
 
     $scope.updateInvoiceTotal = function(index) {
         var invoice_total = 0;
         $scope.invoice_total = 0;
         $.each($scope.invoice_items, function(key, invoice_item) {
+            let isInvalid = ($scope.checkInValidInput(invoice_item.quantity) || $scope.checkInValidInput(invoice_item.price) || $scope.checkInValidInput(invoice_item.discount));
             let item_total = ((invoice_item.quantity * invoice_item.price) - invoice_item.discount);
-            $scope.invoice_items[key].total = item_total;
-            invoice_total += item_total;
+            if(!isInvalid && !isNaN(item_total)) {
+                if(item_total < 0) {
+                    item_total = 0;
+                }
+                $scope.invoice_items[key].total = item_total;
+                invoice_total += item_total;
+            }
         });
         $scope.invoice_sub_total = invoice_total;
         var tax_total = 0;
@@ -134,7 +141,7 @@ app.controller("invoiceController", function($scope, $http) {
         if(isNaN(tax_total)) {
             tax_total = 0;
         }
-        $scope.invoice_total = invoice_total + tax_total;
+        $scope.invoice_total = parseFloat(invoice_total) + parseFloat(tax_total);
     };
 
     $scope.addTaxItem = function() {
@@ -149,5 +156,6 @@ app.controller("invoiceController", function($scope, $http) {
         var selected_index = $scope.selectedTaxItems.indexOf($scope.added_tax_types[index].name);
         $scope.selectedTaxItems.splice(selected_index, 1);
         $scope.added_tax_types.splice(index, 1);
+        $scope.updateInvoiceTotal();
     };
 });

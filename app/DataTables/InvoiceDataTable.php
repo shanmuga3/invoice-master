@@ -32,7 +32,7 @@ class InvoiceDataTable extends DataTable
      */
     public function query(Invoice $model)
     {
-        return $model->get();
+        return $model->with('invoice_items')->get();
     }
 
     /**
@@ -62,7 +62,7 @@ class InvoiceDataTable extends DataTable
             'invoice_date',
             'sub_total',
             'discount',
-            'tax',
+            'total_tax',
             'total',
             'status',
             'paid_status',

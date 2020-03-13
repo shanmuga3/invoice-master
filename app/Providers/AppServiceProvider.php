@@ -41,8 +41,6 @@ class AppServiceProvider extends ServiceProvider
             // $this->app['request']->server->set('HTTPS', true);
         }
 
-        $this->shareCommonData();
-
         $this->registerCollectionMacro();
         $this->registerBladeDirectives();
 
@@ -57,14 +55,14 @@ class AppServiceProvider extends ServiceProvider
 
                     SiteSettings::where('name','site_url')->update(['value' =>  $url]);
                 }
-                $site_name = $site_settings->where('name','site_name')->first()->value;
-                View::share('site_name',$site_name);
             }
 
             if(Schema::hasTable('email_settings')) {
                 $this->setEmailConfig();
             }
         }
+
+        $this->shareCommonData();
     }
 
     protected function shareCommonData()
@@ -81,10 +79,11 @@ class AppServiceProvider extends ServiceProvider
             ["route" => 'admin.site_settings', "value" => Lang::get("admin_messages.site_settings"), "icon" => "fas fa-sliders-h"],
         );
 
+        View::share('site_name',site_settings('site_name'));
+        View::share('version',site_settings('site_version'));
         $version = \Str::random(4);
-
-        View::share('menu_data', $menu_data);
         View::share('version', $version);
+        View::share('menu_data', $menu_data);
         View::share('currency_symbol', "$");
     }
 

@@ -101,7 +101,7 @@ if (!function_exists('tax_types')) {
 		$tax_types = resolve('tax_types');
 		$tax_type = $tax_types->where('name',$key)->first();
 		
-		return optional($tax_type)->value;
+		return $tax_type;
 	}
 }
 
@@ -133,4 +133,18 @@ if (!function_exists('getCurrencyCode')) {
 	{
 		return "INR";
 	}
+}
+
+/**
+ * numberFormat Function
+ *
+ * @param {Float} $value
+ *
+ * @return {string}
+ */
+if (!function_exists('numberFormat')) {
+    
+    function numberFormat($value,$precision = 2) {
+      return number_format($value,$precision,'.','');
+    }
 }

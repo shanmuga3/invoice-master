@@ -13,7 +13,7 @@ class CreateInvoiceTaxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('taxes', function (Blueprint $table) {
+        Schema::create('invoice_taxes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('tax_type_id');
             $table->foreign('tax_type_id')->references('id')->on('tax_types');

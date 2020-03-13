@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\DataTables\InvoiceDataTable;
 use App\Models\Invoice;
 use App\Models\InvoiceItems;
+use App\Models\InvoiceTax;
 use App\Models\User;
 use App\Models\TaxTypes;
 use Lang;
@@ -70,17 +71,12 @@ class InvoiceController extends Controller
         $invoice->paid_status = "Pending";
         $invoice->notes = $request->notes;
         $invoice->currency_code= getCurrencyCode();
-        $invoice->sub_total = $request->sub_total;
-        $invoice->total = $request->total;
-        $invoice->discount_type = $request->discount_type;
-        $invoice->discount = $request->discount;
-        $invoice->discount_val = $request->discount_val;
-        $invoice->round_off = $request->round_off;
         $invoice->unique_hash = \Str::uuid()->toString();
 
         $invoice->save();
 
         $invoice_total = 0;
+        $invoice_subtotal = 0;
 
         foreach ($request->invoice_item as $invoice_item) {
             $item = new InvoiceItems;
@@ -92,17 +88,52 @@ class InvoiceController extends Controller
             $item->price        = $invoice_item["price"];
             $item->quantity     = $invoice_item["quantity"];
             $item->discount     = $invoice_item["discount"];
-            $item->discount_val = $invoice_item["discount_val"] ?? '';
-            $item->tax          = $invoice_item["tax"] ?? '';
+            $item->discount_val = $invoice_item["discount_val"] ?? 0;
+            $item->tax          = $invoice_item["tax"] ?? 0;
 
             $total_price        = ($item->price * $item->quantity) + $item->tax;
             $item->sub_total    = $total_price;
-            $total_price -= $item->discount_val;
+            $total_price        -= $item->discount_val;
             $item->total        = $total_price;
             $item->save();
 
+            $invoice_subtotal   = $item->sub_total;
             $invoice_total += $total_price;
         }
+
+        $tax_items = explode(',',$request->tax_items);
+        $total_tax = 0;
+        foreach ($tax_items as $tax_item) {
+            $tax_type = tax_types($tax_item);
+            if(optional($tax_type)->value != '') {
+                if($tax_type->type == 'percent') {
+                    $tax_value = $invoice_total*($tax_type->value / 100);
+                }
+                else {
+                    $tax_value = $tax_type->value;
+                }
+
+                $invoice_tax = new InvoiceTax;
+                $invoice_tax->tax_type_id   = $tax_type->id;
+                $invoice_tax->invoice_id    = $invoice->id;
+                $invoice_tax->agency_id     = $invoice->agency_id;
+                $invoice_tax->name          = $tax_type->name;
+                $invoice_tax->percent       = $tax_type->value;
+                $invoice_tax->amount        = $tax_value;
+                $invoice_tax->save();
+
+                $total_tax += numberFormat($invoice_tax->amount);
+            }
+        }
+
+        $invoice->sub_total = $invoice_subtotal;
+        $invoice->total = $invoice_total;
+        $invoice->total_tax = $total_tax;
+        $invoice->discount_type = $request->discount_type;
+        $invoice->discount = $request->discount;
+        $invoice->discount_val = $request->discount_val;
+        $invoice->round_off = $request->round_off;
+        $invoice->save();
 
         flashMessage('success', Lang::get('admin_messages.success'), Lang::get('admin_messages.updated_successfully'));
 

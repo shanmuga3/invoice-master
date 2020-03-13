@@ -27,10 +27,12 @@ class CreateInvoicesTable extends Migration
             $table->string('status');
             $table->string('paid_status');
             $table->text('notes')->nullable();
+            $table->string('currency_code',5);
             $table->string('discount_type')->nullable();
             $table->unsignedDecimal('discount', 15, 2)->nullable();
             $table->unsignedDecimal('discount_val')->nullable();
             $table->unsignedDecimal('round_off');
+            $table->unsignedDecimal('total_tax');
             $table->unsignedDecimal('sub_total');
             $table->unsignedDecimal('total');
             $table->unsignedDecimal('due_amount');
