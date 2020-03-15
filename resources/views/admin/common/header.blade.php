@@ -105,7 +105,9 @@
 						</li>
 						<li>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Edit Profile</a>
+							@if(Auth::guard('admin')->user()->can('update-admin_users'))
+							<a class="dropdown-item" href="{{ route('admin.admin_users.edit',['id' => Auth::guard('admin')->id() ]) }}"> Edit Profile </a>
+							@endif
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
 						</li>
@@ -133,7 +135,7 @@
 						<span>
 							{{ Auth::guard('admin')->user()->username }}
 							<span class="user-level">
-								Administrator
+								{{ Auth::guard('admin')->user()->role_name }}
 							</span>
 							<span class="caret"></span>
 						</span>
@@ -143,18 +145,13 @@
 					<div class="collapse in" id="collapseExample">
 						<ul class="nav">
 							<li>
-								<a href="#profile">
-									<span class="link-collapse">My Profile</span>
+								<a href="{{ route('admin.admin_users.edit',['id' => Auth::guard('admin')->id() ]) }}"">
+									<span class="link-collapse"> Edit Profile </span>
 								</a>
 							</li>
 							<li>
-								<a href="#edit">
-									<span class="link-collapse">Edit Profile</span>
-								</a>
-							</li>
-							<li>
-								<a href="#settings">
-									<span class="link-collapse">Settings</span>
+								<a href="{{ route('admin.logout') }}">
+									<span class="link-collapse">Log out </span>
 								</a>
 							</li>
 						</ul>
