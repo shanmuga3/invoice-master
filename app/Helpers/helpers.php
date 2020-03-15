@@ -136,6 +136,19 @@ if (!function_exists('getCurrencyCode')) {
 }
 
 /**
+ * Return Currency Symbol based on session
+ *
+ * @return String
+ */
+if (!function_exists('getCurrencySymbol')) {
+
+	function getCurrencySymbol()
+	{
+		return html_entity_decode("₹​");
+	}
+}
+
+/**
  * numberFormat Function
  *
  * @param {Float} $value

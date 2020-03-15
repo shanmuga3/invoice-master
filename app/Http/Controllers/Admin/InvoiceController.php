@@ -42,10 +42,12 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $data['result'] = new Invoice;
-        $data['customers'] = User::get();
-        $data['tax_types'] = TaxTypes::activeOnly()->get();
-        return view($this->base_path.'add', $data);
+        $this->view_data['result'] = new Invoice;
+        $this->view_data['customers'] = User::get();
+        $this->view_data['tax_types'] = TaxTypes::activeOnly()->get();
+        $this->view_data['invoice_tax_items'] = collect(array());
+        $this->view_data['selectedTaxItems'] = collect(array());
+        return view($this->base_path.'add', $this->view_data);
     }
 
     /**
@@ -160,7 +162,19 @@ class InvoiceController extends Controller
     {
         $this->view_data['customers'] = User::get();
         $this->view_data['tax_types'] = TaxTypes::activeOnly()->get();
-        $this->view_data['result'] = Invoice::with('invoice_items')->findOrFail($id);
+        $this->view_data['result'] = $result = Invoice::with('invoice_items')->findOrFail($id);
+        $invoice_tax_items = $result->invoice_taxes->map(function($invoice_tax) {
+            $tax_type = $invoice_tax->tax_type;
+            $invoice_tax_item = $tax_type->only(['id','agency_id','name','description','type','value']);
+            $invoice_tax_item['total'] = $invoice_tax->currency_symbol.''.$invoice_tax->amount;
+            $invoice_tax_item['tax_value'] = $invoice_tax->currency_symbol.''.$invoice_tax->amount;
+            if($tax_type->type == 'percent') {
+                $invoice_tax_item['tax_value'] = $tax_type->value.'%';
+            }
+            return $invoice_tax_item;
+        });
+        $this->view_data['invoice_tax_items'] = $invoice_tax_items;
+        $this->view_data['selectedTaxItems'] = $invoice_tax_items->pluck('name');
         return view($this->base_path.'edit', $this->view_data);
     }
 
@@ -173,6 +187,82 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validateRequest($request);
+
+        $current_dateObj = Carbon::now();
+
+        $invoice = Invoice::findOrFail($id);
+        $invoice->agency_id = $request->agency;
+        $invoice->invoice_date = $current_dateObj->format('Y-m-d');
+        $invoice->notes = $request->notes;
+        $invoice->currency_code= getCurrencyCode();
+
+        $invoice_total = 0;
+        $invoice_subtotal = 0;
+        $invoice_discount = 0;
+        $updated_ids = [];
+        foreach ($request->invoice_item as $invoice_item) {
+            $item = InvoiceItems::findOrNew($invoice_item["id"]);
+            $item->invoice_id   = $invoice->id;
+            $item->agency_id    = $invoice->agency_id;
+            $item->currency_code= getCurrencyCode();
+            $item->name         = $invoice_item["name"];
+            $item->description  = $invoice_item["description"] ?? '';
+            $item->price        = $invoice_item["price"];
+            $item->quantity     = $invoice_item["quantity"];
+            $item->discount     = $invoice_item["discount"];
+            $item->tax          = $invoice_item["tax"] ?? 0;
+
+            $total_price        = ($item->price * $item->quantity) + $item->tax;
+            $item->sub_total    = $total_price;
+            $total_price        -= $item->discount;
+            $item->total        = $total_price;
+            $item->save();
+
+            $invoice_subtotal   += $item->sub_total;
+            $invoice_total      += $item->total;
+            $invoice_discount   += $item->discount;
+
+            $updated_ids[] = $item->id; 
+        }
+
+        InvoiceItems::where('invoice_id',$id)->whereNotIn("id",$updated_ids)->delete();
+
+        $tax_items = explode(',',$request->tax_items);
+        $total_tax = 0;
+        $updated_ids = [];
+        foreach ($tax_items as $tax_item) {
+            $tax_type = tax_types($tax_item);
+            if(optional($tax_type)->value != '') {
+                if($tax_type->type == 'percent') {
+                    $tax_value = $invoice_total*($tax_type->value / 100);
+                }
+                else {
+                    $tax_value = $tax_type->value;
+                }
+
+                $invoice_tax = InvoiceTax::firstOrNew(["tax_type_id" => $tax_type->id,'invoice_id' => $invoice->id]);
+                $invoice_tax->tax_type_id   = $tax_type->id;
+                $invoice_tax->invoice_id    = $invoice->id;
+                $invoice_tax->agency_id     = $invoice->agency_id;
+                $invoice_tax->name          = $tax_type->name;
+                $invoice_tax->percent       = $tax_type->value;
+                $invoice_tax->amount        = $tax_value;
+                $invoice_tax->save();
+
+                $total_tax += numberFormat($invoice_tax->amount);
+                $updated_ids[] = $invoice_tax->id; 
+            }
+        }
+        InvoiceTax::where('invoice_id',$id)->whereNotIn("id",$updated_ids)->delete();
+
+        $invoice->sub_total = $invoice_subtotal;
+        $invoice->discount  = $invoice_discount;
+        $invoice->round_off = $request->round_off ?? 0;
+        $invoice->total_tax = $total_tax;
+        $invoice->total = $invoice_total + $total_tax;
+        $invoice->save();
+
         flashMessage('success', Lang::get('admin_messages.success'), Lang::get('admin_messages.updated_successfully'));
 
         return redirect($this->base_url);

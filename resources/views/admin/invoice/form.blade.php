@@ -31,7 +31,7 @@
 						</div>
 						<div class="col-md-4 info-invoice">
 							<h5 class="sub"> Invoice To </h5>
-							<p ng-init="customer='{{ $result->user_id }}'">
+							<p ng-init="customer='{{ $result->user_id }}';">
 								<select name="customer" class="form-control py-0" ng-model="customer">
 									<option value=""> @lang('admin_messages.select') </option>
 									@foreach($customers as $customer)
@@ -41,7 +41,7 @@
 							</p>
 						</div>
 					</div>
-					<div class="row" ng-init="currency_symbol= '{{ $currency_symbol }}';invoice_items={{ $result->invoice_items  }};added_tax_types={{ json_encode(array()) }};">
+					<div class="row" ng-init="currency_symbol= '{{ $currency_symbol }}';invoice_items={{ $result->invoice_items  }};added_tax_types={{ $invoice_tax_items }};selectedTaxItems={{ $selectedTaxItems }};invoice_total={{ $result->total ?? 0 }};invoice_sub_total={{ $result->discount_sub_total ?? 0 }}">
 						<div class="col-md-12">
 							<div class="invoice-detail">
 								<div class="invoice-top">
@@ -63,7 +63,7 @@
 											</thead>
 											<tbody>
 												<tr ng-repeat="invoice_item in invoice_items">
-													<td> @{{ $index+1 }} </td>
+													<td> @{{ $index+1 }} <input type="hidden" name="invoice_item[@{{$index}}][id]" ng-model="invoice_item.id" ng-value="@{{ invoice_item.id }}"> </td>
 													<td class="text-center"> <input type="text" name="invoice_item[@{{$index}}][name]" ng-model="invoice_item.name"> </td>
 													<td class="text-center"> <input type="text" name="invoice_item[@{{$index}}][price]" ng-model="invoice_item.price" ng-change="updateInvoiceTotal();"> </td>
 													<td class="text-center"> <input type="text" name="invoice_item[@{{$index}}][quantity]" ng-model="invoice_item.quantity" ng-change="updateInvoiceTotal();"> </td>
@@ -82,7 +82,7 @@
 					</div>
 				</div>
 				<div class="card-footer">
-					<div class="row" ng-init="tax_types={{ $tax_types }}">
+					<div class="row" ng-init="tax_types={{ $tax_types }};">
 						{!! Form::hidden('agency','1') !!}
 						{!! Form::hidden('tax_items','',['ng-value'=>'selectedTaxItems.toString()']) !!}
 						{!! Form::hidden('sub_total','',['ng-value'=>'invoice_sub_total']) !!}

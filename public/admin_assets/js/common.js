@@ -92,13 +92,11 @@ app.controller("appController", function($scope, $http) {
 app.controller("invoiceController", function($scope, $http) {
 
     $(document).ready(function() {
-        $scope.invoice_total = 0;
-        $scope.invoice_sub_total = 0;
-        $scope.selectedTaxItems = [];
-        $scope.applyScope();
+        // $scope.updateInvoiceTotal();
     });
+
     $scope.addInvoiceItem = function() {
-        $scope.invoice_items.push({'name':''});
+        $scope.invoice_items.push({'id':'','name':''});
     };
 
     $scope.removeInvoiceItem = function(index) {
@@ -131,7 +129,7 @@ app.controller("invoiceController", function($scope, $http) {
                 tax_item_total = invoice_total*(tax_type.value / 100);
             }
 
-            $scope.added_tax_types[key].total = $scope.currency_symbol+' '+tax_item_total;
+            $scope.added_tax_types[key].total = $scope.currency_symbol+' '+parseFloat(tax_item_total);
             tax_total += parseFloat(tax_item_total);
         });
 

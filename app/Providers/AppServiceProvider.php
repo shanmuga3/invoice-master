@@ -84,7 +84,7 @@ class AppServiceProvider extends ServiceProvider
         $version = \Str::random(4);
         View::share('version', $version);
         View::share('menu_data', $menu_data);
-        View::share('currency_symbol', "$");
+        View::share('currency_symbol', getCurrencySymbol());
     }
 
     // Bind or Singleton common Models
