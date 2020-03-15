@@ -64,7 +64,6 @@ class InvoiceController extends Controller
         $invoice->invoice_template_id = 1;
         $invoice->user_id = $request->customer;
         $invoice->agency_id = $request->agency;
-        $invoice->invoice_number = "INV".$request->customer;
         $invoice->invoice_date = $current_dateObj->format('Y-m-d');
         $invoice->due_date = $current_dateObj->addDays(7)->format('Y-m-d');
         $invoice->status = "Pending";
@@ -77,6 +76,7 @@ class InvoiceController extends Controller
 
         $invoice_total = 0;
         $invoice_subtotal = 0;
+        $invoice_discount = 0;
 
         foreach ($request->invoice_item as $invoice_item) {
             $item = new InvoiceItems;
@@ -88,17 +88,17 @@ class InvoiceController extends Controller
             $item->price        = $invoice_item["price"];
             $item->quantity     = $invoice_item["quantity"];
             $item->discount     = $invoice_item["discount"];
-            $item->discount_val = $invoice_item["discount_val"] ?? 0;
             $item->tax          = $invoice_item["tax"] ?? 0;
 
             $total_price        = ($item->price * $item->quantity) + $item->tax;
             $item->sub_total    = $total_price;
-            $total_price        -= $item->discount_val;
+            $total_price        -= $item->discount;
             $item->total        = $total_price;
             $item->save();
 
-            $invoice_subtotal   = $item->sub_total;
-            $invoice_total += $total_price;
+            $invoice_subtotal   += $item->sub_total;
+            $invoice_total      += $item->total;
+            $invoice_discount   += $item->discount;
         }
 
         $tax_items = explode(',',$request->tax_items);
@@ -127,12 +127,11 @@ class InvoiceController extends Controller
         }
 
         $invoice->sub_total = $invoice_subtotal;
-        $invoice->total = $invoice_total;
+        $invoice->discount  = $invoice_discount;
+        $invoice->round_off = $request->round_off ?? 0;
         $invoice->total_tax = $total_tax;
-        $invoice->discount_type = $request->discount_type;
-        $invoice->discount = $request->discount;
-        $invoice->discount_val = $request->discount_val;
-        $invoice->round_off = $request->round_off;
+        $invoice->total = $invoice_total + $total_tax;
+        $invoice->invoice_number = "INV".strPadLeft($request->customer).strPadLeft($invoice->id);
         $invoice->save();
 
         flashMessage('success', Lang::get('admin_messages.success'), Lang::get('admin_messages.updated_successfully'));
@@ -190,6 +189,7 @@ class InvoiceController extends Controller
         
         try {
             InvoiceItems::where('invoice_id',$id)->delete();
+            InvoiceTax::where('invoice_id',$id)->delete();
             Invoice::where('id',$id)->delete();
             flashMessage('success', Lang::get('admin_messages.success'), Lang::get('admin_messages.delete_success'));
         }

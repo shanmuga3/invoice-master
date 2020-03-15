@@ -144,7 +144,23 @@ if (!function_exists('getCurrencyCode')) {
  */
 if (!function_exists('numberFormat')) {
     
-    function numberFormat($value,$precision = 2) {
-      return number_format($value,$precision,'.','');
+    function numberFormat($value,$precision = 2)
+    {
+		return number_format($value,$precision,'.','');
+    }
+}
+
+/**
+ * strPad Function
+ *
+ * @param {string} $value
+ *
+ * @return {string}
+ */
+if (!function_exists('strPadLeft')) {
+    
+    function strPadLeft($input,$length = 4)
+    {
+		return str_pad($input, $length,0,STR_PAD_LEFT);
     }
 }

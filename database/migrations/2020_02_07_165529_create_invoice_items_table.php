@@ -25,7 +25,6 @@ class CreateInvoiceItemsTable extends Migration
             $table->unsignedDecimal('price');
             $table->unsignedDecimal('quantity', 15, 2);
             $table->unsignedDecimal('discount', 15, 2)->nullable();
-            $table->unsignedDecimal('discount_val');
             $table->unsignedDecimal('tax');
             $table->unsignedDecimal('sub_total');
             $table->unsignedDecimal('total');

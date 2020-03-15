@@ -132,7 +132,7 @@ app.controller("invoiceController", function($scope, $http) {
             }
 
             $scope.added_tax_types[key].total = $scope.currency_symbol+' '+tax_item_total;
-            tax_total += tax_item_total;
+            tax_total += parseFloat(tax_item_total);
         });
 
         if(isNaN(invoice_total)) {
