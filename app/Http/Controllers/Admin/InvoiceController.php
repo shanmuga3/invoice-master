@@ -150,6 +150,7 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $this->view_data['result'] = Invoice::with('invoice_items')->findOrFail($id);
+        return view($this->base_path.'invoice', $this->view_data);
     }
 
     /**

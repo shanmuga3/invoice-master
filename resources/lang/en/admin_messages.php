@@ -25,6 +25,7 @@ return [
     'email_settings'    => 'Email Settings',
     'site_settings'     => 'Site Settings',
     'management'        => 'Management',
+    'detail'            => 'Detail',
     'confirm_delete'    => 'Confirm Delete',
     'delete_desc'       => 'This Process is irreversible,Are you confirm to delete this.',
     'proceed'           => 'Proceed',
@@ -48,6 +49,7 @@ return [
     'added_successfully'=> 'Added Successfully',
     'updated_successfully'=> 'Updated Successfully',
     'select'            => 'Select',
+    'print'             => 'Print',
 
     'users' => [
         'user_name'         => 'User Name',
