@@ -49,7 +49,10 @@ return [
     'added_successfully'=> 'Added Successfully',
     'updated_successfully'=> 'Updated Successfully',
     'select'            => 'Select',
+    'download'          => 'Download',
     'print'             => 'Print',
+    'status'            => 'Status',
+    'action'            => 'Action',
 
     'users' => [
         'user_name'         => 'User Name',
@@ -101,5 +104,18 @@ return [
         'type'                  => 'Type',
         'fixed'                 => 'Fixed',
         'percent'               => 'Percent',
+    ],
+
+    'invoice_details'   => [
+        'invoice_from'          => 'Invoice From',
+        'invoice_to'            => 'Invoice To',
+        'invoice_number'        => 'Invoice Number',
+        'invoice_date'          => 'Invoice Date',
+        'invoice_summary'       => 'Invoice Summary',
+        'item'                  => 'Item',
+        'price'                 => 'Price',
+        'quantity'              => 'Quantity',
+        'discount'              => 'Discount',
+        'total'                 => 'Total',
     ],
 ];

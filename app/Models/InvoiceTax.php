@@ -20,4 +20,15 @@ class InvoiceTax extends Model
     {
     	return $this->hasOne('App\Models\TaxTypes',"id","tax_type_id");
     }
+
+    public function getTaxValueAttribute()
+    {
+        if($this->tax_type->type == 'percent') {
+            $tax_value = $this->tax_type->value.'%';
+        }
+        else {
+            $tax_value = $this->currency_symbol.''.$this->amount;
+        }
+        return $tax_value;
+    }
 }

@@ -53,12 +53,12 @@
 											<thead>
 												<tr>
 													<th><strong> # </strong></th>
-													<th class="text-center"> Item </th>
-													<th class="text-center"> Price </th>
-													<th class="text-center"> Quantity </th>
-													<th class="text-center"> Discount </th>
-													<th class="text-center"> Totals </th>
-													<th class="text-right"> Action </th>
+													<th class="text-center"> @lang("admin_messages.invoice_details.item") </th>
+													<th class="text-center"> @lang("admin_messages.invoice_details.price") </th>
+													<th class="text-center"> @lang("admin_messages.invoice_details.quantity") </th>
+													<th class="text-center"> @lang("admin_messages.invoice_details.discount") </th>
+													<th class="text-center"> @lang("admin_messages.invoice_details.total") </th>
+													<th class="text-right">  @lang("admin_messages.action") </th>
 												</tr>
 											</thead>
 											<tbody>

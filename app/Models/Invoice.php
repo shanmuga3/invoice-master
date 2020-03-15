@@ -15,6 +15,16 @@ class Invoice extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function agency()
+    {
+        return $this->belongsTo('App\Models\AgencyDetails','agency_id','admin_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\User','user_id');
+    }
 	
     public function invoice_items()
     {
@@ -29,5 +39,10 @@ class Invoice extends Model
     public function getDiscountSubTotalAttribute()
     {
         return $this->sub_total - $this->discount;
+    }
+
+    public function getInvoiceDateFormattedAttribute()
+    {
+        return date('F d, Y',strtotime('invoice_date'));
     }
 }

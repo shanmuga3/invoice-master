@@ -23,7 +23,7 @@ class CreateInvoiceItemsTable extends Migration
             $table->string('currency_code',5);
             $table->string('description')->nullable();
             $table->unsignedDecimal('price');
-            $table->unsignedDecimal('quantity', 15, 2);
+            $table->unsignedInteger('quantity');
             $table->unsignedDecimal('discount', 15, 2)->nullable();
             $table->unsignedDecimal('tax');
             $table->unsignedDecimal('sub_total');
