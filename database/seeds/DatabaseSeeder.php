@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             AgencyTableSeeder::class,
+            TaxTypesTableSeeder::class,
         ]);
     }
 }

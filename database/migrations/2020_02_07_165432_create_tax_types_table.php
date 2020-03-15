@@ -19,6 +19,7 @@ class CreateTaxTypesTable extends Migration
             $table->foreign('agency_id')->references('id')->on('agency_details');
             $table->string('name');
             $table->enum('type',['fixed','percent']);
+            $table->string('currency_code',5)->nullable();
             $table->decimal('value');
             $table->text('description')->nullable();
             $table->boolean('status')->default(1);

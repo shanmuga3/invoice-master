@@ -110,7 +110,7 @@ app.controller("invoiceController", function($scope, $http) {
         var invoice_total = 0;
         $scope.invoice_total = 0;
         $.each($scope.invoice_items, function(key, invoice_item) {
-            let isInvalid = ($scope.checkInValidInput(invoice_item.quantity) || $scope.checkInValidInput(invoice_item.price) || $scope.checkInValidInput(invoice_item.discount));
+            let isInvalid = ($scope.checkInValidInput(invoice_item.quantity) || $scope.checkInValidInput(invoice_item.price));
             let item_total = ((invoice_item.quantity * invoice_item.price) - invoice_item.discount);
             if(!isInvalid && !isNaN(item_total)) {
                 if(item_total < 0) {
