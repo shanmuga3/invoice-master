@@ -8,6 +8,13 @@ use App\Traits\CurrencyConversion;
 class Invoice extends Model
 {
 	use CurrencyConversion;
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
 	
     public function invoice_items()
     {
