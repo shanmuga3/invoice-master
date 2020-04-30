@@ -22,7 +22,7 @@
     "dependencies": {
         "bootstrap": "^4.4.1",
         "bootstrap-select": "^1.13.12",
-        "jquery": "^3.4.1",
+        "jquery": "^3.5.0",
         "jquery-ui": "^1.12.1",
         "popper.js": "^1.16.0"
     }
